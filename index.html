@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Conteggio Voti - Scrutinio Live</title>
-  <script src="https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js" defer></script>
   <style>
     :root {
       --bg: #f1f5f9;
@@ -69,6 +68,7 @@
       font-weight: 600;
       border-radius: 8px;
       border: 1px solid transparent;
+      touch-action: manipulation;
       transition: transform 0.06s ease, background-color 0.15s ease, opacity 0.15s ease;
     }
     button:active { transform: scale(0.97); }
@@ -100,7 +100,6 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
 
-    /* Banner Osservatore */
     .viewer-banner {
       background: #eff6ff;
       border: 2px solid #3b82f6;
@@ -116,7 +115,6 @@
     }
     .viewer-banner.active { display: flex; }
 
-    /* Pannello Live */
     .live-panel { display: none; border: 2px solid #93c5fd; background: #f8fafc; }
     .live-panel.open { display: block; }
     .live-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.75rem; }
@@ -140,7 +138,6 @@
       margin: 0.4rem 0;
     }
 
-    /* Configurazione Scrutinio */
     .setup-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
@@ -161,7 +158,6 @@
     }
     input:disabled, select:disabled { background: #f1f5f9; color: var(--muted); }
 
-    /* Esito */
     .outcome-bar {
       display: flex;
       flex-wrap: wrap;
@@ -177,7 +173,6 @@
     .outcome-bar.rejected { background: #fee2e2; color: #7f1d1d; border: 1px solid #fca5a5; }
     .outcome-bar.pending { background: #fef3c7; color: #78350f; border: 1px solid #fcd34d; }
 
-    /* Barra percentuale */
     .progress-track {
       height: 14px;
       background: #e2e8f0;
@@ -189,7 +184,6 @@
     .prog-fav { background: #16a34a; transition: width 0.25s ease; }
     .prog-con { background: #dc2626; transition: width 0.25s ease; }
 
-    /* Griglia Voti (3 colonne) */
     .votes-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -244,7 +238,6 @@
 
     .viewer-mode .vote-controls { display: none; }
 
-    /* Azioni e Cronologia */
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -325,37 +318,35 @@
         <span id="liveBadge" class="badge-live">LIVE</span>
       </div>
       <div class="header-actions">
-        <button type="button" id="btnToggleLive" class="btn-header">Condivisione Live</button>
-        <button type="button" id="btnAudio" class="btn-header">Audio: OFF</button>
+        <button type="button" id="btnToggleLive" class="btn-header" onclick="appToggleLive()">Condivisione Live</button>
+        <button type="button" id="btnAudio" class="btn-header" onclick="appToggleAudio()">Audio: OFF</button>
       </div>
     </div>
   </header>
 
   <main id="appContainer">
-    <!-- Banner Modalità Osservatore -->
     <div id="viewerBanner" class="viewer-banner">
       <span id="viewerStatusText">Modalità Osservatore (Sola Lettura) — Connesso allo scrutinio</span>
-      <button type="button" id="btnLeaveViewer" class="btn-secondary">Esci da osservatore</button>
+      <button type="button" id="btnLeaveViewer" class="btn-secondary" onclick="appLeaveViewer()">Esci da osservatore</button>
     </div>
 
-    <!-- Pannello Condivisione Live -->
     <section id="livePanel" class="card live-panel">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <strong style="font-size:1.05rem;">Sincronizzazione Cloud Live (Qualsiasi Rete / 4G / Wi-Fi)</strong>
-        <button type="button" id="btnCloseLive" class="btn-secondary" style="padding:0.25rem 0.6rem;">Chiudi</button>
+        <button type="button" id="btnCloseLive" class="btn-secondary" style="padding:0.25rem 0.6rem;" onclick="appToggleLive(false)">Chiudi</button>
       </div>
       <div class="live-grid">
         <div class="live-box">
           <h3>1. Trasmetti dal tuo dispositivo (Scrutatore)</h3>
           <p style="font-size:0.85rem; color:var(--muted);">Genera un codice stanza o un link diretto da inviare ai tuoi amici su qualsiasi rete.</p>
           <div id="hostControls" style="margin-top:0.6rem;">
-            <button type="button" id="btnStartHost" class="btn-primary">Avvia Trasmissione Live</button>
+            <button type="button" id="btnStartHost" class="btn-primary" onclick="appStartHost()">Avvia Trasmissione Live</button>
           </div>
           <div id="hostActiveInfo" style="display:none; margin-top:0.5rem;">
             <div>Codice Stanza: <span id="roomCodeText" class="room-code-display">------</span></div>
             <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.4rem;">
-              <button type="button" id="btnCopyLink" class="btn-primary">Copia Link Diretto</button>
-              <button type="button" id="btnStopHost" class="btn-danger">Interrompi</button>
+              <button type="button" id="btnCopyLink" class="btn-primary" onclick="appCopyLink()">Copia Link Diretto</button>
+              <button type="button" id="btnStopHost" class="btn-danger" onclick="appStopHost()">Interrompi</button>
             </div>
           </div>
           <div id="hostStatus" style="font-size:0.82rem; color:var(--muted); margin-top:0.4rem;"></div>
@@ -366,35 +357,33 @@
           <p style="font-size:0.85rem; color:var(--muted);">Inserisci il codice a 6 caratteri condiviso dallo scrutatore.</p>
           <div style="display:flex; gap:0.5rem; margin-top:0.65rem;">
             <input type="text" id="inputRoomCode" placeholder="Es. A7B9K2" maxlength="6" style="text-transform:uppercase; font-family:monospace; font-weight:700;" />
-            <button type="button" id="btnJoinRoom" class="btn-primary">Segui</button>
+            <button type="button" id="btnJoinRoom" class="btn-primary" onclick="appJoinRoom()">Segui</button>
           </div>
           <div id="joinStatus" style="font-size:0.82rem; color:var(--muted); margin-top:0.4rem;"></div>
         </div>
       </div>
     </section>
 
-    <!-- Parametri Votazione -->
     <section class="card">
       <div class="setup-grid">
         <div>
           <label for="voteTitle">Oggetto della votazione / Delibera</label>
-          <input type="text" id="voteTitle" placeholder="Es. Approvazione Bilancio Consuntivo" />
+          <input type="text" id="voteTitle" placeholder="Es. Approvazione Bilancio Consuntivo" oninput="appUpdateMeta()" />
         </div>
         <div>
           <label for="majorityType">Criterio di maggioranza</label>
-          <select id="majorityType">
+          <select id="majorityType" onchange="appUpdateMeta()">
             <option value="simple">Maggioranza semplice (Fav &gt; Con)</option>
             <option value="absolute">Maggioranza assoluta (50% + 1 aventi diritto)</option>
           </select>
         </div>
         <div>
           <label for="quorumInput">Aventi diritto / Quorum</label>
-          <input type="number" id="quorumInput" min="0" value="0" />
+          <input type="number" id="quorumInput" min="0" value="0" oninput="appUpdateMeta()" />
         </div>
       </div>
     </section>
 
-    <!-- Esito e Barra Percentuale -->
     <section class="card">
       <div id="outcomeBar" class="outcome-bar">
         <span id="outcomeText">In attesa di voti...</span>
@@ -406,15 +395,14 @@
       </div>
     </section>
 
-    <!-- Pulsantiera Voti -->
     <section class="votes-grid">
       <div class="vote-card fav">
         <div class="vote-title">Favorevoli (F)</div>
         <div id="countFav" class="vote-count">0</div>
         <div id="pctFav" class="vote-pct">0.0%</div>
         <div class="vote-controls">
-          <button type="button" class="btn-plus" data-action="add" data-type="fav">+1</button>
-          <button type="button" class="btn-minus" data-action="sub" data-type="fav">-1</button>
+          <button type="button" class="btn-plus" onclick="appVote('fav', 1)">+1</button>
+          <button type="button" class="btn-minus" onclick="appVote('fav', -1)">-1</button>
         </div>
       </div>
 
@@ -423,8 +411,8 @@
         <div id="countCon" class="vote-count">0</div>
         <div id="pctCon" class="vote-pct">0.0%</div>
         <div class="vote-controls">
-          <button type="button" class="btn-plus" data-action="add" data-type="con">+1</button>
-          <button type="button" class="btn-minus" data-action="sub" data-type="con">-1</button>
+          <button type="button" class="btn-plus" onclick="appVote('con', 1)">+1</button>
+          <button type="button" class="btn-minus" onclick="appVote('con', -1)">-1</button>
         </div>
       </div>
 
@@ -433,22 +421,21 @@
         <div id="countNul" class="vote-count">0</div>
         <div id="pctNul" class="vote-pct">0.0%</div>
         <div class="vote-controls">
-          <button type="button" class="btn-plus" data-action="add" data-type="nul">+1</button>
-          <button type="button" class="btn-minus" data-action="sub" data-type="nul">-1</button>
+          <button type="button" class="btn-plus" onclick="appVote('nul', 1)">+1</button>
+          <button type="button" class="btn-minus" onclick="appVote('nul', -1)">-1</button>
         </div>
       </div>
     </section>
 
-    <!-- Strumenti e Cronologia -->
     <section class="card">
       <div class="toolbar">
         <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <button type="button" id="btnUndo" class="btn-secondary" disabled>Annulla ultimo (Z)</button>
-          <button type="button" id="btnReset" class="btn-danger">Nuovo scrutinio</button>
+          <button type="button" id="btnUndo" class="btn-secondary" disabled onclick="appUndo()">Annulla ultimo (Z)</button>
+          <button type="button" id="btnReset" class="btn-danger" onclick="appReset()">Nuovo scrutinio</button>
         </div>
         <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <button type="button" id="btnCopyReport" class="btn-secondary">Copia Verbale</button>
-          <button type="button" id="btnExportCsv" class="btn-secondary">Esporta CSV</button>
+          <button type="button" id="btnCopyReport" class="btn-secondary" onclick="appCopyReport()">Copia Verbale</button>
+          <button type="button" id="btnExportCsv" class="btn-secondary" onclick="appExportCsv()">Esporta CSV</button>
         </div>
       </div>
       <div id="historyList" class="history-list">
@@ -460,15 +447,15 @@
   <div id="toast" class="toast"></div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const STORAGE_KEY = "scrutinio_voti_state_v5";
-      const BROKER_URLS = [
+    (function () {
+      var STORAGE_KEY = "scrutinio_voti_state_v6";
+      var BROKER_URLS = [
         "wss://broker.emqx.io:8084/mqtt",
         "wss://broker.hivemq.com:8884/mqtt"
       ];
-      const TOPIC_PREFIX = "scrutinio-voti-live-it/v1/room/";
+      var TOPIC_PREFIX = "scrutinio-voti-live-it/v1/room/";
 
-      let state = {
+      var state = {
         title: "",
         majority: "simple",
         quorum: 0,
@@ -479,871 +466,517 @@
         updatedAt: 0
       };
 
-      let audioEnabled = false;
-      let audioCtx = null;
-      let isViewer = false;
-      let isHosting = false;
-      let mqttClient = null;
-      let currentRoomCode = "";
-      let activeTopic = "";
+      var audioEnabled = false;
+      var audioCtx = null;
+      var isViewer = false;
+      var isHosting = false;
+      var mqttClient = null;
+      var currentRoomCode = "";
+      var activeTopic = "";
 
-      const el = {
-        app: document.getElementById("appContainer"),
-        liveBadge: document.getElementById("liveBadge"),
-        btnToggleLive: document.getElementById("btnToggleLive"),
-        btnAudio: document.getElementById("btnAudio"),
-        viewerBanner: document.getElementById("viewerBanner"),
-        viewerStatusText: document.getElementById("viewerStatusText"),
-        btnLeaveViewer: document.getElementById("btnLeaveViewer"),
-        livePanel: document.getElementById("livePanel"),
-        btnCloseLive: document.getElementById("btnCloseLive"),
-        btnStartHost: document.getElementById("btnStartHost"),
-        hostControls: document.getElementById("hostControls"),
-        hostActiveInfo: document.getElementById("hostActiveInfo"),
-        roomCodeText: document.getElementById("roomCodeText"),
-        btnCopyLink: document.getElementById("btnCopyLink"),
-        btnStopHost: document.getElementById("btnStopHost"),
-        hostStatus: document.getElementById("hostStatus"),
-        inputRoomCode: document.getElementById("inputRoomCode"),
-        btnJoinRoom: document.getElementById("btnJoinRoom"),
-        joinStatus: document.getElementById("joinStatus"),
-        voteTitle: document.getElementById("voteTitle"),
-        majorityType: document.getElementById("majorityType"),
-        quorumInput: document.getElementById("quorumInput"),
-        outcomeBar: document.getElementById("outcomeBar"),
-        outcomeText: document.getElementById("outcomeText"),
-        totalVotesText: document.getElementById("totalVotesText"),
-        progFav: document.getElementById("progFav"),
-        progCon: document.getElementById("progCon"),
-        countFav: document.getElementById("countFav"),
-        countCon: document.getElementById("countCon"),
-        countNul: document.getElementById("countNul"),
-        pctFav: document.getElementById("pctFav"),
-        pctCon: document.getElementById("pctCon"),
-        pctNul: document.getElementById("pctNul"),
-        btnUndo: document.getElementById("btnUndo"),
-        btnReset: document.getElementById("btnReset"),
-        btnCopyReport: document.getElementById("btnCopyReport"),
-        btnExportCsv: document.getElementById("btnExportCsv"),
-        historyList: document.getElementById("historyList"),
-        toast: document.getElementById("toast")
-      };
+      function $(id) { return document.getElementById(id); }
 
       function showToast(msg) {
-        el.toast.textContent = msg;
-        el.toast.classList.add("show");
+        var t = $("toast");
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add("show");
         clearTimeout(showToast._t);
-        showToast._t = setTimeout(() => el.toast.classList.remove("show"), 2600);
+        showToast._t = setTimeout(function () { t.classList.remove("show"); }, 2600);
       }
 
       function playTone(type) {
         if (!audioEnabled) return;
         try {
           if (!audioCtx) {
-            const Ctx = window.AudioContext || window.webkitAudioContext;
+            var Ctx = window.AudioContext || window.webkitAudioContext;
             if (Ctx) audioCtx = new Ctx();
           }
           if (!audioCtx) return;
           if (audioCtx.state === "suspended") audioCtx.resume();
 
-          const freqs = { fav: 660, con: 330, nul: 240, undo: 200 };
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
+          var freqs = { fav: 660, con: 330, nul: 240, undo: 200 };
+          var osc = audioCtx.createOscillator();
+          var gain = audioCtx.createGain();
           osc.type = "sine";
           osc.frequency.value = freqs[type] || 440;
           gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.14);
           osc.connect(gain);
-          gain.connect(audioCtxe = 'local';
-                            render();
-                        }
-                        showToast('Impossibile connettersi al server Live. Puoi comunque usare l’app in locale.', 'warning');
-                    });
-                } catch (e) {
-                    dom.startHostBtn.disabled = false;
-                    liveRole = 'local';
-                    render();
-                    showToast('Errore avvio trasmissione live.', 'warning');
-                }
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.15);
+        } catch (e) {}
+      }
+
+      function saveLocal() {
+        if (isViewer) return;
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {}
+      }
+
+      function loadLocal() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === "object") {
+              state.title = parsed.title || "";
+              state.majority = parsed.majority || "simple";
+              state.quorum = parseInt(parsed.quorum, 10) || 0;
+              state.fav = parseInt(parsed.fav, 10) || 0;
+              state.con = parseInt(parsed.con, 10) || 0;
+              state.nul = parseInt(parsed.nul, 10) || 0;
+              state.history = Array.isArray(parsed.history) ? parsed.history : [];
             }
+          }
+        } catch (e) {}
+      }
 
-            function startViewerSession(rawCode, isAutoFromUrl = false) {
-                const formatted = normalizeCode(rawCode);
-                if (!formatted) {
-                    if (!isAutoFromUrl) {
-                        showToast('Inserisci un codice valido di 6 caratteri (es. K7M-49P).', 'warning');
-                        dom.viewerCodeInput.focus();
-                    }
-                    return;
-                }
+      function publishState() {
+        if (!isHosting || !mqttClient || !mqttClient.connected || !activeTopic) return;
+        state.updatedAt = Date.now();
+        try {
+          mqttClient.publish(activeTopic, JSON.stringify({
+            status: "ACTIVE",
+            state: state
+          }), { qos: 1, retain: true });
+        } catch (e) {}
+      }
 
-                if (typeof window.Peer === 'undefined') {
-                    // Se lo script CDN sta ancora caricando al boot della pagina, riprova dopo 600ms
-                    if (isAutoFromUrl) {
-                        setTimeout(() => startViewerSession(formatted, true), 600);
-                    } else {
-                        showToast('Connessione di rete non disponibile. Riprova tra qualche secondo.', 'warning');
-                    }
-                    return;
-                }
+      function render() {
+        $("voteTitle").value = state.title || "";
+        $("majorityType").value = state.majority || "simple";
+        $("quorumInput").value = state.quorum || 0;
 
-                cleanupPeer();
-                dom.connectViewerBtn.disabled = true;
-                dom.connectViewerBtn.textContent = 'Connessione...';
+        var total = state.fav + state.con + state.nul;
+        var valid = state.fav + state.con;
 
-                const targetPeerId = codeToPeerId(formatted);
+        $("countFav").textContent = state.fav;
+        $("countCon").textContent = state.con;
+        $("countNul").textContent = state.nul;
 
-                try {
-                    const peer = new window.Peer({ debug: 0 });
-                    peerInstance = peer;
+        var pct = function (n) { return total > 0 ? ((n / total) * 100).toFixed(1) + "%" : "0.0%"; };
+        $("pctFav").textContent = pct(state.fav);
+        $("pctCon").textContent = pct(state.con);
+        $("pctNul").textContent = pct(state.nul);
 
-                    peer.on('open', () => {
-                        const conn = peer.connect(targetPeerId, { reliable: true });
-                        viewerConnection = conn;
+        $("progFav").style.width = total > 0 ? (state.fav / total * 100) + "%" : "0%";
+        $("progCon").style.width = total > 0 ? (state.con / total * 100) + "%" : "0%";
 
-                        // Timeout di sicurezza se lo scrutatore non risponde
-                        const connectTimeout = setTimeout(() => {
-                            if (liveRole !== 'viewer') {
-                                dom.connectViewerBtn.disabled = false;
-                                dom.connectViewerBtn.textContent = 'Collegati';
-                                cleanupPeer();
-                                showToast(`Nessuna sessione attiva trovata con codice ${formatted}.`, 'warning');
-                            }
-                        }, 9000);
+        $("totalVotesText").textContent = "Totale schede: " + total + " (Validi: " + valid + ")";
 
-                        conn.on('open', () => {
-                            clearTimeout(connectTimeout);
-                            roomCode = formatted;
-                            liveRole = 'viewer';
-                            dom.connectViewerBtn.disabled = false;
-                            dom.connectViewerBtn.textContent = 'Collegati';
-                            render();
-                            showToast(`Collegato in diretta alla stanza ${roomCode}!`, 'success');
-                        });
+        var outcomeBar = $("outcomeBar");
+        var outcomeText = $("outcomeText");
+        outcomeBar.className = "outcome-bar";
+        var q = parseInt(state.quorum, 10) || 0;
 
-                        conn.on('data', (data) => {
-                            if (data && data.type === 'SYNC_STATE' && data.payload) {
-                                applyRemoteState(data.payload);
-                            }
-                        });
-
-                        conn.on('close', () => {
-                            if (liveRole === 'viewer') {
-                                showToast('Lo scrutatore ha chiuso la trasmissione live.', 'info');
-                                disconnectLiveSession(false);
-                            }
-                        });
-
-                        conn.on('error', () => {
-                            clearTimeout(connectTimeout);
-                            dom.connectViewerBtn.disabled = false;
-                            dom.connectViewerBtn.textContent = 'Collegati';
-                            if (liveRole === 'viewer') {
-                                showToast('Connessione persa con lo scrutatore. Tentativo di riconnessione...', 'warning');
-                                scheduleViewerReconnect(formatted);
-                            } else {
-                                cleanupPeer();
-                                showToast(`Impossibile raggiungere la stanza ${formatted}.`, 'warning');
-                            }
-                        });
-                    });
-
-                    peer.on('error', (err) => {
-                        dom.connectViewerBtn.disabled = false;
-                        dom.connectViewerBtn.textContent = 'Collegati';
-                        if (err && err.type === 'peer-unavailable') {
-                            showToast(`Codice stanza ${formatted} non trovato o trasmissione non attiva.`, 'warning');
-                        } else {
-                            showToast('Errore di rete durante il collegamento Live.', 'warning');
-                        }
-                        if (liveRole !== 'viewer') {
-                            cleanupPeer();
-                        }
-                    });
-                } catch (e) {
-                    dom.connectViewerBtn.disabled = false;
-                    dom.connectViewerBtn.textContent = 'Collegati';
-                    showToast('Errore durante il collegamento.', 'warning');
-                }
+        if (total === 0) {
+          outcomeText.textContent = "In attesa di voti...";
+        } else if (state.majority === "absolute") {
+          if (q <= 0) {
+            outcomeText.textContent = "Inserisci il numero degli aventi diritto per calcolare la maggioranza assoluta";
+            outcomeBar.classList.add("pending");
+          } else {
+            var threshold = Math.floor(q / 2) + 1;
+            if (state.fav >= threshold) {
+              outcomeText.textContent = "APPROVATA (Maggioranza assoluta raggiunta: " + state.fav + "/" + threshold + " richiesti)";
+              outcomeBar.classList.add("approved");
+            } else {
+              outcomeText.textContent = "NON APPROVATA (Servono almeno " + threshold + " favorevoli su " + q + " aventi diritto)";
+              outcomeBar.classList.add("rejected");
             }
+          }
+        } else {
+          if (q > 0 && total < q) {
+            outcomeText.textContent = "QUORUM NON RAGGIUNTO (" + total + "/" + q + " votanti)";
+            outcomeBar.classList.add("pending");
+          } else if (state.fav > state.con) {
+            outcomeText.textContent = "APPROVATA (Favorevoli " + state.fav + " > Contrari " + state.con + ")";
+            outcomeBar.classList.add("approved");
+          } else if (state.con > state.fav) {
+            outcomeText.textContent = "RESPINTA (Contrari " + state.con + " > Favorevoli " + state.fav + ")";
+            outcomeBar.classList.add("rejected");
+          } else {
+            outcomeText.textContent = "PARITÀ (" + state.fav + " Favorevoli — " + state.con + " Contrari)";
+            outcomeBar.classList.add("pending");
+          }
+        }
 
-            function scheduleViewerReconnect(formattedCode) {
-                if (reconnectTimer) clearTimeout(reconnectTimer);
-                reconnectTimer = setTimeout(() => {
-                    if (liveRole === 'viewer') {
-                        startViewerSession(formattedCode, true);
-                    }
-                }, 3000);
+        var historyList = $("historyList");
+        if (!state.history || state.history.length === 0) {
+          historyList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:0.5rem;">Nessuna operazione registrata</div>';
+        } else {
+          var reversed = state.history.slice().reverse();
+          var len = reversed.length;
+          var html = "";
+          for (var i = 0; i < len; i++) {
+            var num = len - i;
+            html += '<div class="history-item"><span><span class="history-num">#' + num + '</span>' + reversed[i].label + '</span><span style="color:var(--muted)">' + reversed[i].time + '</span></div>';
+          }
+          historyList.innerHTML = html;
+        }
+
+        $("btnUndo").disabled = isViewer || !state.history || state.history.length === 0;
+        $("btnReset").disabled = isViewer;
+        $("voteTitle").disabled = isViewer;
+        $("majorityType").disabled = isViewer;
+        $("quorumInput").disabled = isViewer;
+
+        if (isViewer) {
+          $("appContainer").classList.add("viewer-mode");
+          $("viewerBanner").classList.add("active");
+        } else {
+          $("appContainer").classList.remove("viewer-mode");
+          $("viewerBanner").classList.remove("active");
+        }
+      }
+
+      var LABELS = {
+        fav: "Favorevole",
+        con: "Contrario",
+        nul: "Bianca / Nulla"
+      };
+
+      window.appVote = function (type, delta) {
+        if (isViewer) return;
+        if (delta < 0 && state[type] <= 0) return;
+
+        state[type] += delta;
+        var now = new Date().toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+        state.history.push({
+          type: type,
+          delta: delta,
+          label: (delta > 0 ? "+1 " : "-1 ") + LABELS[type],
+          time: now
+        });
+
+        playTone(type);
+        saveLocal();
+        render();
+        publishState();
+      };
+
+      window.appUndo = function () {
+        if (isViewer || state.history.length === 0) return;
+        var last = state.history.pop();
+        if (typeof state[last.type] === "number") {
+          state[last.type] = Math.max(0, state[last.type] - last.delta);
+        }
+        playTone("undo");
+        saveLocal();
+        render();
+        publishState();
+        showToast("Ultima operazione annullata");
+      };
+
+      window.appReset = function () {
+        if (isViewer) return;
+        if (!confirm("Azzerare tutti i contatori e iniziare un nuovo scrutinio?")) return;
+        state.fav = 0;
+        state.con = 0;
+        state.nul = 0;
+        state.history = [];
+        saveLocal();
+        render();
+        publishState();
+        showToast("Nuovo scrutinio avviato (conteggio ripartito da #1)");
+      };
+
+      window.appUpdateMeta = function () {
+        if (isViewer) return;
+        state.title = $("voteTitle").value;
+        state.majority = $("majorityType").value;
+        state.quorum = parseInt($("quorumInput").value, 10) || 0;
+        saveLocal();
+        render();
+        publishState();
+      };
+
+      window.appToggleAudio = function () {
+        audioEnabled = !audioEnabled;
+        var btn = $("btnAudio");
+        btn.textContent = audioEnabled ? "Audio: ON" : "Audio: OFF";
+        btn.classList.toggle("active", audioEnabled);
+        if (audioEnabled) playTone("fav");
+      };
+
+      window.appCopyReport = function () {
+        var total = state.fav + state.con + state.nul;
+        var lines = [
+          "VERBALE DI SCRUTINIO",
+          state.title ? "Oggetto: " + state.title : "",
+          "Data e ora: " + new Date().toLocaleString("it-IT"),
+          "----------------------------------------",
+          "Favorevoli: " + state.fav,
+          "Contrari: " + state.con,
+          "Bianche / Nulle: " + state.nul,
+          "Totale schede scrutinate: " + total,
+          "Esito: " + $("outcomeText").textContent
+        ].filter(Boolean).join("\n");
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(lines).then(function () {
+            showToast("Verbale copiato negli appunti");
+          }).catch(function () {
+            alert(lines);
+          });
+        } else {
+          alert(lines);
+        }
+      };
+
+      window.appExportCsv = function () {
+        var csv = [
+          ["Oggetto", "Favorevoli", "Contrari", "Bianche_Nulle", "Totale", "Esito"].join(","),
+          [
+            '"' + (state.title || "Scrutinio").replace(/"/g, '""') + '"',
+            state.fav,
+            state.con,
+            state.nul,
+            state.fav + state.con + state.nul,
+            '"' + $("outcomeText").textContent + '"'
+          ].join(",")
+        ].join("\n");
+
+        var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "scrutinio_voti.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      };
+
+      document.addEventListener("keydown", function (e) {
+        if (isViewer) return;
+        var tag = document.activeElement ? document.activeElement.tagName : "";
+        if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
+        var k = (e.key || "").toLowerCase();
+        if (k === "f") window.appVote("fav", 1);
+        else if (k === "c") window.appVote("con", 1);
+        else if (k === "n") window.appVote("nul", 1);
+        else if (k === "z") window.appUndo();
+      });
+
+      // --- CONDIVISIONE CLOUD LIVE ---
+      window.appToggleLive = function (forceState) {
+        var panel = $("livePanel");
+        if (typeof forceState === "boolean") {
+          panel.classList.toggle("open", forceState);
+        } else {
+          panel.classList.toggle("open");
+        }
+      };
+
+      function generateCode() {
+        var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        var res = "";
+        for (var i = 0; i < 6; i++) res += chars[Math.floor(Math.random() * chars.length)];
+        return res;
+      }
+
+      function disconnectMqtt() {
+        if (mqttClient) {
+          try { mqttClient.end(true); } catch (e) {}
+          mqttClient = null;
+        }
+        isHosting = false;
+        currentRoomCode = "";
+        activeTopic = "";
+        $("liveBadge").classList.remove("active");
+      }
+
+      function createMqttConnection(brokerIndex, onConnected, onError) {
+        var url = BROKER_URLS[brokerIndex] || BROKER_URLS[0];
+        var clientId = "scrut_" + Math.random().toString(36).substring(2, 10);
+        var client = window.mqtt.connect(url, {
+          clientId: clientId,
+          clean: true,
+          connectTimeout: 7000,
+          reconnectPeriod: 3000
+        });
+
+        var settled = false;
+        client.on("connect", function () {
+          settled = true;
+          onConnected(client);
+        });
+
+        client.on("error", function (err) {
+          if (!settled && brokerIndex + 1 < BROKER_URLS.length) {
+            settled = true;
+            try { client.end(true); } catch (e) {}
+            createMqttConnection(brokerIndex + 1, onConnected, onError);
+          } else if (onError) {
+            onError(err);
+          }
+        });
+
+        return client;
+      }
+
+      window.appStartHost = function () {
+        if (typeof window.mqtt === "undefined") {
+          $("hostStatus").textContent = "Libreria cloud in caricamento... attendo 2 secondi e riprovo.";
+          setTimeout(window.appStartHost, 1500);
+          return;
+        }
+        disconnectMqtt();
+        var code = generateCode();
+        $("hostStatus").textContent = "Connessione al server cloud in corso...";
+
+        mqttClient = createMqttConnection(0, function (client) {
+          mqttClient = client;
+          isHosting = true;
+          isViewer = false;
+          currentRoomCode = code;
+          activeTopic = TOPIC_PREFIX + code;
+
+          $("roomCodeText").textContent = code;
+          $("hostControls").style.display = "none";
+          $("hostActiveInfo").style.display = "block";
+          $("hostStatus").textContent = "Trasmissione attiva su qualsiasi rete (Wi-Fi e 4G/5G).";
+          $("liveBadge").classList.add("active");
+          $("liveBadge").textContent = "LIVE: " + code;
+
+          publishState();
+          showToast("Trasmissione Live avviata!");
+        }, function () {
+          $("hostStatus").textContent = "Impossibile raggiungere il cloud. Controlla la connessione internet.";
+        });
+      };
+
+      window.appStopHost = function () {
+        if (mqttClient && mqttClient.connected && activeTopic) {
+          try {
+            mqttClient.publish(activeTopic, JSON.stringify({ status: "CLOSED" }), { qos: 1, retain: true });
+          } catch (e) {}
+        }
+        setTimeout(function () {
+          disconnectMqtt();
+          $("hostControls").style.display = "block";
+          $("hostActiveInfo").style.display = "none";
+          $("hostStatus").textContent = "Trasmissione interrotta.";
+        }, 250);
+      };
+
+      window.appCopyLink = function () {
+        if (!currentRoomCode) return;
+        var base = window.location.href.split("?")[0];
+        var fullUrl = base + "?room=" + encodeURIComponent(currentRoomCode);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(fullUrl).then(function () {
+            showToast("Link diretto copiato! Invialo ai tuoi amici.");
+          }).catch(function () {
+            prompt("Copia questo link e invialo ai tuoi amici:", fullUrl);
+          });
+        } else {
+          prompt("Copia questo link e invialo ai tuoi amici:", fullUrl);
+        }
+      };
+
+      function connectAsViewer(code) {
+        var cleanCode = (code || "").trim().toUpperCase();
+        if (cleanCode.length < 4) {
+          $("joinStatus").textContent = "Inserisci un codice stanza valido.";
+          return;
+        }
+        if (typeof window.mqtt === "undefined") {
+          $("joinStatus").textContent = "Connessione al cloud in corso...";
+          setTimeout(function () { connectAsViewer(cleanCode); }, 600);
+          return;
+        }
+
+        disconnectMqtt();
+        $("joinStatus").textContent = "Connessione alla stanza " + cleanCode + "...";
+        var topic = TOPIC_PREFIX + cleanCode;
+
+        mqttClient = createMqttConnection(0, function (client) {
+          mqttClient = client;
+          client.subscribe(topic, { qos: 1 }, function (err) {
+            if (err) {
+              $("joinStatus").textContent = "Errore di sottoscrizione alla stanza.";
+              return;
             }
-
-            function applyRemoteState(remote) {
-                const prevCounter = state.actionCounter;
-                const newCounter = typeof remote.actionCounter === 'number' ? remote.actionCounter : 0;
-                const preservedSound = state.soundEnabled;
-
-                state = {
-                    subject: remote.subject || 'Votazione in corso',
-                    counts: {
-                        favorevoli: Number(remote.counts?.favorevoli || 0),
-                        contrari: Number(remote.counts?.contrari || 0),
-                        astenuti: Number(remote.counts?.astenuti || 0),
-                        nulle: Number(remote.counts?.nulle || 0)
-                    },
-                    history: Array.isArray(remote.history) ? remote.history : [],
-                    actionCounter: newCounter,
-                    majorityType: remote.majorityType === 'absolute' ? 'absolute' : 'simple',
-                    eligibleVoters: remote.eligibleVoters ?? '',
-                    soundEnabled: preservedSound
-                };
-
-                render();
-
-                // Animazione e suono quando arriva un nuovo movimento dallo scrutatore
-                if (newCounter !== prevCounter && state.history.length > 0) {
-                    const lastMove = state.history[0];
-                    if (lastMove && lastMove.type) {
-                        flashCard(lastMove.type);
-                        playTone(lastMove.type, lastMove.delta || 1);
-                    }
-                }
-            }
-
-            function disconnectLiveSession(notify = true) {
-                const wasViewer = liveRole === 'viewer';
-                cleanupPeer();
-                liveRole = 'local';
-                roomCode = '';
-
-                // Rimuove eventuale parametro ?room= dall'URL senza ricaricare la pagina
-                try {
-                    const url = new URL(window.location.href);
-                    if (url.searchParams.has('room')) {
-                        url.searchParams.delete('room');
-                        window.history.replaceState({}, '', url.toString());
-                    }
-                } catch (e) {}
-
-                if (wasViewer) {
-                    const preservedSound = state.soundEnabled;
-                    state = loadState();
-                    state.soundEnabled = preservedSound;
-                } else {
-                    saveAndBroadcast();
-                }
-
-                render();
-                if (notify) {
-                    showToast('Connessione Live terminata.', 'info');
-                }
-            }
-
-            function getDirectShareUrl() {
-                const url = new URL(window.location.href);
-                url.searchParams.set('room', roomCode);
-                return url.toString();
-            }
-
-            // =========================================================
-            // 4. LOGICA DI CONTEGGIO E CRONOLOGIA
-            // =========================================================
-            function formatTime(date = new Date()) {
-                return date.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            }
-
-            function formatPercent(value, total) {
-                if (total === 0) return '0,0%';
-                return ((value / total) * 100).toFixed(1).replace('.', ',') + '%';
-            }
-
-            function flashCard(type) {
-                const card = dom.cards[type];
-                if (!card) return;
-                card.classList.remove('card-flash');
-                void card.offsetWidth;
-                card.classList.add('card-flash');
-            }
-
-            function recordVote(type, delta) {
-                if (liveRole === 'viewer') return;
-                if (!CATEGORIES[type]) return;
-
-                if (delta < 0 && state.counts[type] <= 0) {
-                    showToast(`Nessun voto "${CATEGORIES[type].plural}" da sottrarre.`, 'warning');
-                    return;
-                }
-
-                state.counts[type] += delta;
-                state.actionCounter += 1;
-
-                state.history.unshift({
-                    id: state.actionCounter,
-                    type: type,
-                    delta: delta,
-                    time: formatTime()
-                });
-
-                if (state.history.length > 200) {
-                    state.history.pop();
-                }
-
-                playTone(type, delta);
-                flashCard(type);
-                saveAndBroadcast();
-                render();
-            }
-
-            function undoLastVote() {
-                if (liveRole === 'viewer') return;
-                if (state.history.length === 0) return;
-
-                const lastAction = state.history.shift();
-                state.counts[lastAction.type] = Math.max(0, state.counts[lastAction.type] - lastAction.delta);
-                state.actionCounter += 1;
-
-                playTone('undo', -1);
-                saveAndBroadcast();
-                render();
-                showToast(`Annullato: ${lastAction.delta > 0 ? '+1' : '-1'} ${CATEGORIES[lastAction.type].label}`, 'info');
-            }
-
-            // =========================================================
-            // 5. CALCOLO ESITO, MAGGIORANZA E QUORUM
-            // =========================================================
-            function calculateOutcome() {
-                const { favorevoli, contrari, astenuti, nulle } = state.counts;
-                const totalCast = favorevoli + contrari + astenuti + nulle;
-                const validVotes = favorevoli + contrari;
-                const eligible = parseInt(state.eligibleVoters, 10);
-                const hasEligible = !isNaN(eligible) && eligible > 0;
-
-                if (totalCast === 0) {
-                    return {
-                        label: 'IN ATTESA DI VOTI',
-                        detail: 'Registra il primo voto per avviare il calcolo.',
-                        quorumText: hasEligible ? `Aventi diritto: ${eligible} (Quorum 50%+1: ${Math.floor(eligible / 2) + 1})` : '',
-                        style: 'bg-slate-100 text-slate-700 border-slate-300',
-                        dot: 'bg-slate-500'
-                    };
-                }
-
-                let quorumText = '';
-                let quorumReached = true;
-
-                if (hasEligible) {
-                    const quorumNeeded = Math.floor(eligible / 2) + 1;
-                    quorumReached = totalCast >= quorumNeeded;
-                    quorumText = `Votanti: ${totalCast}/${eligible} (Quorum: ${quorumNeeded})`;
-                }
-
-                // Maggioranza assoluta (Favorevoli >= metà + 1 degli aventi diritto)
-                if (state.majorityType === 'absolute') {
-                    if (!hasEligible) {
-                        return {
-                            label: 'INSERIRE AVENTI DIRITTO',
-                            detail: 'Indica il numero degli aventi diritto per calcolare la maggioranza assoluta.',
-                            quorumText: '',
-                            style: 'bg-amber-50 text-amber-800 border-amber-300',
-                            dot: 'bg-amber-500'
-                        };
-                    }
-
-                    const threshold = Math.floor(eligible / 2) + 1;
-                    if (favorevoli >= threshold) {
-                        return {
-                            label: 'APPROVATA',
-                            detail: `Maggioranza assoluta raggiunta (${favorevoli} su ${threshold} richiesti)`,
-                            quorumText,
-                            style: 'bg-emerald-50 text-emerald-800 border-emerald-300',
-                            dot: 'bg-emerald-600'
-                        };
-                    } else {
-                        const remaining = Math.max(0, eligible - totalCast);
-                        const canStillWin = (favorevoli + remaining) >= threshold;
-                        return {
-                            label: canStillWin ? 'IN CORSO (SOGLIA NON RAGGIUNTA)' : 'RESPINTA',
-                            detail: `Soglia maggioranza assoluta: ${threshold} favorevoli (attuali: ${favorevoli})`,
-                            quorumText,
-                            style: 'bg-rose-50 text-rose-800 border-rose-300',
-                            dot: 'bg-rose-600'
-                        };
-                    }
-                }
-
-                // Maggioranza semplice (Favorevoli > Contrari sui voti validi)
-                if (hasEligible && !quorumReached) {
-                    return {
-                        label: 'NUMERO LEGALE NON RAGGIUNTO',
-                        detail: `Presenti votanti ${totalCast} su ${Math.floor(eligible / 2) + 1} necessari`,
-                        quorumText,
-                        style: 'bg-amber-50 text-amber-800 border-amber-300',
-                        dot: 'bg-amber-500'
-                    };
-                }
-
-                if (validVotes === 0) {
-                    return {
-                        label: 'NESSUN VOTO VALIDO',
-                        detail: `Solo astenuti (${astenuti}) o schede bianche/nulle (${nulle})`,
-                        quorumText,
-                        style: 'bg-slate-100 text-slate-700 border-slate-300',
-                        dot: 'bg-slate-500'
-                    };
-                }
-
-                if (favorevoli > contrari) {
-                    return {
-                        label: 'APPROVATA',
-                        detail: `Maggioranza semplice (${favorevoli} Favorevoli vs ${contrari} Contrari)`,
-                        quorumText,
-                        style: 'bg-emerald-50 text-emerald-800 border-emerald-300',
-                        dot: 'bg-emerald-600'
-                    };
-                } else if (contrari > favorevoli) {
-                    return {
-                        label: 'RESPINTA',
-                        detail: `Prevalgono i contrari (${contrari} Contrari vs ${favorevoli} Favorevoli)`,
-                        quorumText,
-                        style: 'bg-rose-50 text-rose-800 border-rose-300',
-                        dot: 'bg-rose-600'
-                    };
-                } else {
-                    return {
-                        label: 'PARITÀ',
-                        detail: `Parità esatta (${favorevoli} Favorevoli e ${contrari} Contrari)`,
-                        quorumText,
-                        style: 'bg-amber-50 text-amber-900 border-amber-300',
-                        dot: 'bg-amber-500'
-                    };
-                }
-            }
-
-            // =========================================================
-            // 6. AGGIORNAMENTO INTERFACCIA (RENDER)
-            // =========================================================
-            function render() {
-                const { favorevoli, contrari, astenuti, nulle } = state.counts;
-                const total = favorevoli + contrari + astenuti + nulle;
-                const isViewer = liveRole === 'viewer';
-
-                // Badge stato Live in intestazione
-                if (liveRole === 'host') {
-                    dom.headerLiveBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-200 border border-rose-400/40';
-                    dom.headerLiveDot.className = 'w-2 h-2 rounded-full bg-rose-400 animate-ping';
-                    dom.headerLiveText.textContent = `Live: ${roomCode}`;
-                } else if (liveRole === 'viewer') {
-                    dom.headerLiveBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/40';
-                    dom.headerLiveDot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
-                    dom.headerLiveText.textContent = `Osservatore: ${roomCode}`;
-                } else {
-                    dom.headerLiveBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700';
-                    dom.headerLiveDot.className = 'w-2 h-2 rounded-full bg-slate-400';
-                    dom.headerLiveText.textContent = 'Locale';
-                }
-
-                // Banner Osservatore e Pannello Condivisione Live
-                dom.viewerBanner.classList.toggle('hidden', !isViewer);
-                if (isViewer) {
-                    dom.viewerBannerCode.textContent = roomCode;
-                }
-
-                // Mostra o nasconde il pannello Condivisione Live
-                if (isViewer) {
-                    dom.livePanel.classList.add('hidden');
-                } else {
-                    dom.livePanel.classList.toggle('hidden', !livePanelOpen);
-                    dom.liveSetupContainer.classList.toggle('hidden', liveRole === 'host');
-                    dom.liveActiveHost.classList.toggle('hidden', liveRole !== 'host');
-                    if (liveRole === 'host') {
-                        dom.hostCodeDisplay.textContent = roomCode;
-                    }
-                }
-
-                // Blocca/nasconde i controlli di scrittura in modalità Osservatore
-                dom.voteSubject.disabled = isViewer;
-                dom.majorityType.disabled = isViewer;
-                dom.eligibleVoters.disabled = isViewer;
-
-                document.querySelectorAll('.vote-controls').forEach(el => {
-                    el.classList.toggle('hidden', isViewer);
-                });
-                document.querySelectorAll('.shortcut-badge').forEach(el => {
-                    el.classList.toggle('hidden', isViewer);
-                });
-                dom.undoBtn.classList.toggle('hidden', isViewer);
-                dom.resetContainer.classList.toggle('hidden', isViewer);
-                dom.shortcutsFooter.classList.toggle('hidden', isViewer);
-
-                // Aggiorna campi testuali senza interrompere la digitazione attiva
-                if (document.activeElement !== dom.voteSubject) {
-                    dom.voteSubject.value = state.subject;
-                }
-                dom.majorityType.value = state.majorityType;
-                if (document.activeElement !== dom.eligibleVoters) {
-                    dom.eligibleVoters.value = state.eligibleVoters;
-                }
-
-                // Pulsante Audio
-                dom.audioToggleBtn.setAttribute('aria-pressed', String(state.soundEnabled));
-                if (state.soundEnabled) {
-                    dom.audioToggleBtn.className = 'btn-press flex items-center gap-2 px-3.5 py-2.5 rounded-xl font-bold text-sm border transition-all bg-indigo-600 border-indigo-500 text-white shadow-sm hover:bg-indigo-500 cursor-pointer';
-                    dom.audioIconOn.classList.remove('hidden');
-                    dom.audioIconOff.classList.add('hidden');
-                    dom.audioLabel.textContent = 'Audio: ON';
-                } else {
-                    dom.audioToggleBtn.className = 'btn-press flex items-center gap-2 px-3.5 py-2.5 rounded-xl font-bold text-sm border transition-all bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 cursor-pointer';
-                    dom.audioIconOn.classList.add('hidden');
-                    dom.audioIconOff.classList.remove('hidden');
-                    dom.audioLabel.textContent = 'Audio: OFF';
-                }
-
-                // Contatori, percentuali e barre
-                dom.headerTotalVotes.textContent = total;
-
-                ['favorevoli', 'contrari', 'astenuti', 'nulle'].forEach(key => {
-                    const val = state.counts[key];
-                    const pctNum = total > 0 ? (val / total) * 100 : 0;
-                    dom.counts[key].textContent = val;
-                    dom.pcts[key].textContent = formatPercent(val, total);
-                    dom.bars[key].style.width = `${pctNum}%`;
-                    dom.bars[key].textContent = pctNum >= 8 ? `${Math.round(pctNum)}%` : '';
-                });
-
-                // Esito e Quorum
-                const outcome = calculateOutcome();
-                dom.outcomeBadge.className = `inline-flex items-center gap-2 px-4 py-1.5 rounded-xl text-base sm:text-lg font-extrabold border ${outcome.style}`;
-                dom.outcomeDot.className = `w-2.5 h-2.5 rounded-full ${outcome.dot}`;
-                dom.outcomeText.textContent = outcome.label;
-                dom.outcomeDetail.textContent = outcome.detail;
-                dom.quorumStatus.textContent = outcome.quorumText;
-
-                // Registro Cronologico
-                dom.historyCount.textContent = state.history.length;
-                dom.undoBtn.disabled = state.history.length === 0;
-
-                if (state.history.length === 0) {
-                    dom.historyList.innerHTML = `<div class="text-sm text-slate-400 italic py-8 text-center">Nessun voto registrato. Usa i pulsanti sopra o i tasti F, C, A, N.</div>`;
-                } else {
-                    dom.historyList.innerHTML = state.history.map(item => {
-                        const cat = CATEGORIES[item.type] || CATEGORIES.favorevoli;
-                        const sign = item.delta > 0 ? '+1' : '-1';
-                        return `
-                            <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 border border-slate-100 text-sm">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="font-mono text-xs font-bold text-slate-400">#${item.id}</span>
-                                    <span class="px-2 py-0.5 rounded-md text-xs font-extrabold border ${cat.badgeClass}">
-                                        ${sign} ${cat.label}
-                                    </span>
-                                </div>
-                                <span class="font-mono text-xs font-medium text-slate-500">${item.time}</span>
-                            </div>
-                        `;
-                    }).join('');
-                }
-            }
-
-            // =========================================================
-            // 7. VERBALE, CSV, CLIPBOARD E NOTIFICHE
-            // =========================================================
-            function copyTextFallbackSafe(text, successMsg) {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    const ok = document.execCommand('copy');
-                    if (ok) {
-                        showToast(successMsg, 'success');
-                    } else {
-                        showToast('Impossibile copiare automaticamente.', 'warning');
-                    }
-                } catch (err) {
-                    showToast('Errore durante la copia negli appunti.', 'warning');
-                } finally {
-                    document.body.removeChild(textarea);
-                }
-            }
-
-            function generateMinutesText() {
-                const { favorevoli, contrari, astenuti, nulle } = state.counts;
-                const total = favorevoli + contrari + astenuti + nulle;
-                const outcome = calculateOutcome();
-                const nowStr = new Date().toLocaleString('it-IT', { dateStyle: 'full', timeStyle: 'short' });
-                const subject = state.subject.trim() || 'Votazione senza titolo';
-                const eligible = parseInt(state.eligibleVoters, 10);
-
-                const lines = [
-                    `VERBALE DI SCRUTINIO`,
-                    `========================================`,
-                    `Oggetto: ${subject}`,
-                    `Data e ora: ${nowStr}`,
-                    `Regola: ${state.majorityType === 'simple' ? 'Maggioranza semplice (Favorevoli > Contrari)' : 'Maggioranza assoluta (50% + 1 aventi diritto)'}`
-                ];
-
-                if (!isNaN(eligible) && eligible > 0) {
-                    lines.push(`Aventi diritto al voto: ${eligible}`);
-                }
-
-                lines.push(
-                    `----------------------------------------`,
-                    `RIEPILOGO VOTI:`,
-                    `- Favorevoli:      ${favorevoli} (${formatPercent(favorevoli, total)})`,
-                    `- Contrari:        ${contrari} (${formatPercent(contrari, total)})`,
-                    `- Astenuti:        ${astenuti} (${formatPercent(astenuti, total)})`,
-                    `- Bianche / Nulle: ${nulle} (${formatPercent(nulle, total)})`,
-                    `----------------------------------------`,
-                    `TOTALE VOTANTI: ${total}`,
-                    `ESITO: ${outcome.label} (${outcome.detail})`,
-                    `========================================`
-                );
-
-                return lines.join('\n');
-            }
-
-            function exportCSV() {
-                const { favorevoli, contrari, astenuti, nulle } = state.counts;
-                const total = favorevoli + contrari + astenuti + nulle;
-                const outcome = calculateOutcome();
-                const subjectSafe = `"${(state.subject || 'Scrutinio').replace(/"/g, '""')}"`;
-                const timestamp = new Date().toISOString();
-
-                const rows = [
-                    ['Oggetto', 'Data_Ora_ISO', 'Favorevoli', 'Contrari', 'Astenuti', 'Bianche_Nulle', 'Totale_Votanti', 'Esito'],
-                    [subjectSafe, timestamp, favorevoli, contrari, astenuti, nulle, total, `"${outcome.label}"`]
-                ];
-
-                const csvContent = '\uFEFF' + rows.map(r => r.join(';')).join('\n');
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const url = URL.createObjectURL(blob);
-
-                const link = document.createElement('a');
-                const slug = (state.subject || 'scrutinio')
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]+/gi, '_')
-                    .replace(/^_|_$/g, '')
-                    .slice(0, 40) || 'scrutinio';
-
-                link.href = url;
-                link.download = `${slug}_${new Date().toISOString().slice(0, 10)}.csv`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-
-                showToast('File CSV esportato!', 'success');
-            }
-
-            function showToast(message, variant = 'info') {
-                const toast = document.createElement('div');
-                const styles = {
-                    success: 'bg-emerald-900 text-white border-emerald-700',
-                    warning: 'bg-amber-900 text-white border-amber-700',
-                    info:    'bg-slate-900 text-white border-slate-700'
-                };
-                toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-lg border text-sm font-semibold transform transition-all duration-300 translate-y-2 opacity-0 ${styles[variant] || styles.info}`;
-                toast.textContent = message;
-                dom.toastContainer.appendChild(toast);
-
-                requestAnimationFrame(() => {
-                    toast.classList.remove('translate-y-2', 'opacity-0');
-                });
-
-                setTimeout(() => {
-                    toast.classList.add('translate-y-2', 'opacity-0');
-                    setTimeout(() => toast.remove(), 300);
-                }, 2800);
-            }
-
-            function openResetModal() {
-                dom.resetModal.classList.remove('hidden');
-                dom.resetModal.classList.add('flex');
-            }
-
-            function closeResetModal() {
-                dom.resetModal.classList.add('hidden');
-                dom.resetModal.classList.remove('flex');
-            }
-
-            function performReset() {
-                if (liveRole === 'viewer') return;
-                const preservedSound = state.soundEnabled;
-                const preservedSubject = state.subject;
-                const nextCounter = state.actionCounter + 1;
-
-                state = JSON.parse(JSON.stringify(defaultState));
-                state.soundEnabled = preservedSound;
-                state.subject = preservedSubject;
-                state.actionCounter = nextCounter;
-
-                saveAndBroadcast();
-                render();
-                closeResetModal();
-                showToast('Scrutinio azzerato.', 'info');
-            }
-
-            // =========================================================
-            // 8. INIZIALIZZAZIONE EVENTI E AVVIO IMMEDIATO
-            // =========================================================
-            function updateClock() {
-                const now = new Date();
-                dom.liveDatetime.textContent = now.toLocaleDateString('it-IT', {
-                    weekday: 'short',
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                }) + ' • ' + now.toLocaleTimeString('it-IT', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
-            }
-
-            // Pulsanti +1 e -1 delle quattro schede
-            document.querySelectorAll('button[data-action]').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const action = btn.getAttribute('data-action');
-                    const type = btn.getAttribute('data-type');
-                    recordVote(type, action === 'add' ? 1 : -1);
-                });
-            });
-
-            // Campi modificabili
-            dom.voteSubject.addEventListener('input', (e) => {
-                if (liveRole === 'viewer') return;
-                state.subject = e.target.value;
-                saveAndBroadcast();
-            });
-
-            dom.majorityType.addEventListener('change', (e) => {
-                if (liveRole === 'viewer') return;
-                state.majorityType = e.target.value;
-                saveAndBroadcast();
-                render();
-            });
-
-            dom.eligibleVoters.addEventListener('input', (e) => {
-                if (liveRole === 'viewer') return;
-                state.eligibleVoters = e.target.value;
-                saveAndBroadcast();
-                render();
-            });
-
-            // Toggle Audio
-            dom.audioToggleBtn.addEventListener('click', () => {
-                state.soundEnabled = !state.soundEnabled;
-                saveAndBroadcast();
-                render();
-                if (state.soundEnabled) playTone('favorevoli', 1);
-            });
-
-            // Toggle Pannello Condivisione Live
-            dom.toggleLivePanelBtn.addEventListener('click', () => {
-                if (liveRole === 'viewer') return;
-                livePanelOpen = !livePanelOpen;
-                dom.toggleLivePanelBtn.setAttribute('aria-expanded', String(livePanelOpen));
-                render();
-            });
-
-            // Schede nel pannello Live (Trasmetti vs Segui)
-            dom.tabHostBtn.addEventListener('click', () => {
-                dom.tabHostBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-white text-indigo-700 shadow-sm transition-all cursor-pointer';
-                dom.tabViewerBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all cursor-pointer';
-                dom.tabHostContent.classList.remove('hidden');
-                dom.tabViewerContent.classList.add('hidden');
-            });
-
-            dom.tabViewerBtn.addEventListener('click', () => {
-                dom.tabViewerBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-white text-indigo-700 shadow-sm transition-all cursor-pointer';
-                dom.tabHostBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all cursor-pointer';
-                dom.tabViewerContent.classList.remove('hidden');
-                dom.tabHostContent.classList.add('hidden');
-                dom.viewerCodeInput.focus();
-            });
-
-            // Azioni Condivisione Live
-            dom.startHostBtn.addEventListener('click', () => startHostSession(1));
-            dom.connectViewerBtn.addEventListener('click', () => startViewerSession(dom.viewerCodeInput.value, false));
-            dom.viewerCodeInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    startViewerSession(dom.viewerCodeInput.value, false);
-                }
-            });
-            dom.copyCodeBtn.addEventListener('click', () => {
-                if (roomCode) copyTextFallbackSafe(roomCode, `Codice stanza ${roomCode} copiato!`);
-            });
-            dom.copyLinkBtn.addEventListener('click', () => {
-                if (roomCode) copyTextFallbackSafe(getDirectShareUrl(), 'Link diretto copiato! Invialo ai tuoi amici.');
-            });
-            dom.stopHostBtn.addEventListener('click', () => disconnectLiveSession(true));
-            dom.bannerDisconnectBtn.addEventListener('click', () => disconnectLiveSession(true));
-
-            // Azioni Registro, Verbale, CSV e Reset
-            dom.undoBtn.addEventListener('click', undoLastVote);
-            dom.copyMinutesBtn.addEventListener('click', () => {
-                copyTextFallbackSafe(generateMinutesText(), 'Verbale copiato negli appunti!');
-            });
-            dom.exportCsvBtn.addEventListener('click', exportCSV);
-            dom.resetBtn.addEventListener('click', openResetModal);
-            dom.cancelResetBtn.addEventListener('click', closeResetModal);
-            dom.confirmResetBtn.addEventListener('click', performReset);
-            dom.resetModal.addEventListener('click', (e) => {
-                if (e.target === dom.resetModal) closeResetModal();
-            });
-
-            // Scorciatoie da tastiera (F, C, A, N, Z, ESC)
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && !dom.resetModal.classList.contains('hidden')) {
-                    closeResetModal();
-                    return;
-                }
-
-                if (liveRole === 'viewer') return;
-
-                const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
-                if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
-                if (e.ctrlKey || e.metaKey || e.altKey) return;
-
-                const key = e.key.toLowerCase();
-                if (key === 'f') {
-                    e.preventDefault();
-                    recordVote('favorevoli', 1);
-                } else if (key === 'c') {
-                    e.preventDefault();
-                    recordVote('contrari', 1);
-                } else if (key === 'a') {
-                    e.preventDefault();
-                    recordVote('astenuti', 1);
-                } else if (key === 'n') {
-                    e.preventDefault();
-                    recordVote('nulle', 1);
-                } else if (key === 'z') {
-                    e.preventDefault();
-                    undoLastVote();
-                }
-            });
-
-            // Avvio immediato dell'interfaccia locale (zero dipendenze bloccanti)
-            updateClock();
-            setInterval(updateClock, 1000);
+            isViewer = true;
+            currentRoomCode = cleanCode;
+            activeTopic = topic;
+            $("joinStatus").textContent = "";
+            $("livePanel").classList.remove("open");
+            $("liveBadge").classList.add("active");
+            $("liveBadge").textContent = "OSSERVATORE: " + cleanCode;
+            $("viewerStatusText").textContent = "Modalità Osservatore (Sola Lettura) — Stanza " + cleanCode + " (In attesa dati...)";
             render();
+            showToast("Connesso alla stanza " + cleanCode);
+          });
 
-            // Controlla se l'URL contiene ?room=CODICE per collegarsi automaticamente come Osservatore
+          client.on("message", function (msgTopic, payload) {
+            if (msgTopic !== topic) return;
             try {
-                const params = new URLSearchParams(window.location.search);
-                const roomParam = params.get('room');
-                if (roomParam) {
-                    dom.tabViewerBtn.click();
-                    dom.viewerCodeInput.value = roomParam.toUpperCase();
-                    window.addEventListener('load', () => {
-                        startViewerSession(roomParam, true);
-                    });
-                }
-            } catch (e) {
-                // Ignora eventuali errori di parsing URL
-            }
-        })();
-    </script>
+              var data = JSON.parse(payload.toString());
+              if (data.status === "CLOSED") {
+                $("viewerStatusText").textContent = "Stanza " + cleanCode + " — Scrutinio terminato dallo scrutatore.";
+                return;
+              }
+              if (data && data.state) {
+                var prevTotal = state.fav + state.con + state.nul;
+                state.title = data.state.title || "";
+                state.majority = data.state.majority || "simple";
+                state.quorum = parseInt(data.state.quorum, 10) || 0;
+                state.fav = parseInt(data.state.fav, 10) || 0;
+                state.con = parseInt(data.state.con, 10) || 0;
+                state.nul = parseInt(data.state.nul, 10) || 0;
+                state.history = Array.isArray(data.state.history) ? data.state.history : [];
+                var newTotal = state.fav + state.con + state.nul;
+                if (newTotal > prevTotal) playTone("fav");
+                $("viewerStatusText").textContent = "Modalità Osservatore (Sola Lettura) — Stanza " + cleanCode + " • Aggiornato in diretta";
+                render();
+              }
+            } catch (e) {}
+          });
+        }, function () {
+          $("joinStatus").textContent = "Errore di connessione al cloud. Riprova.";
+        });
+      }
+
+      window.appJoinRoom = function () {
+        connectAsViewer($("inputRoomCode").value);
+      };
+
+      window.appLeaveViewer = function () {
+        disconnectMqtt();
+        isViewer = false;
+        var base = window.location.href.split("?")[0];
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState({}, "", base);
+        }
+        loadLocal();
+        render();
+        showToast("Modalità osservatore disattivata");
+      };
+
+      // Inizializzazione immediata UI
+      loadLocal();
+      render();
+
+      // Caricamento asincrono libreria cloud MQTT in secondo piano
+      var s = document.createElement("script");
+      s.src = "https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js";
+      s.async = true;
+      document.body.appendChild(s);
+
+      // Controllo parametro ?room=CODICE nell'URL
+      var match = window.location.search.match(/[?&]room=([^&]+)/i);
+      if (match && match[1]) {
+        var roomParam = decodeURIComponent(match[1]);
+        $("inputRoomCode").value = roomParam;
+        connectAsViewer(roomParam);
+      }
+    })();
+  </script>
 </body>
 </html>
