@@ -278,120 +278,12 @@
             </div>
         </section>
 
-        <!-- Riquadro Esito, Quorum e B200">Modalità Locale</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-0.5">Trasmetti lo scrutinio in tempo reale o inserisci un codice stanza per seguire come osservatore.</p>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                    <button 
-                        id="create-live-btn" 
-                        type="button" 
-                        class="btn-press px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm shadow-indigo-600/20 flex items-center justify-center gap-2 transition-colors cursor-pointer"
-                    >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z"/>
-                        </svg>
-                        <span>Crea Sessione Live</span>
-                    </button>
-
-                    <div class="flex items-center gap-2">
-                        <label for="join-code-input" class="sr-only">Codice stanza</label>
-                        <input 
-                            id="join-code-input" 
-                            type="text" 
-                            maxlength="7" 
-                            placeholder="Es. ABC-123" 
-                            class="w-32 sm:w-36 px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-sm font-mono font-bold uppercase tracking-wider text-slate-900 placeholder:font-sans placeholder:font-normal placeholder:normal-case placeholder:tracking-normal focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none"
-                        />
-                        <button 
-                            id="join-live-btn" 
-                            type="button" 
-                            class="btn-press px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer shrink-0"
-                        >
-                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span>Segui Sessione</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stato 2: Modalità Scrutatore (Trasmissione Live Attiva) -->
-            <div id="live-panel-host" class="hidden flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div class="flex flex-wrap items-center gap-3">
-                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider bg-rose-600 text-white shadow-sm">
-                        <span class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
-                        TRASMISSIONE LIVE
-                    </span>
-                    <div class="flex items-center gap-2 bg-indigo-50 border border-indigo-200 px-3.5 py-1.5 rounded-xl">
-                        <span class="text-xs font-bold uppercase text-indigo-800">Codice Stanza:</span>
-                        <span id="host-room-code" class="text-lg sm:text-xl font-mono font-black tracking-widest text-indigo-950 select-all">---</span>
-                    </div>
-                    <span id="host-sync-status" class="text-xs font-semibold text-emerald-700 flex items-center gap-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                        Sincronizzato in tempo reale
-                    </span>
-                </div>
-
-                <div class="flex flex-wrap items-center gap-2.5">
-                    <button 
-                        id="copy-room-code-btn" 
-                        type="button" 
-                        class="btn-press px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm flex items-center gap-2 transition-colors cursor-pointer"
-                    >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/>
-                        </svg>
-                        <span>Copia Codice</span>
-                    </button>
-                    <button 
-                        id="leave-host-btn" 
-                        type="button" 
-                        class="btn-press px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-colors cursor-pointer"
-                    >
-                        Termina Sessione
-                    </button>
-                </div>
-            </div>
-
-            <!-- Stato 3: Modalità Osservatore Live (Sola Lettura) -->
-            <div id="live-panel-viewer" class="hidden flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div class="flex flex-wrap items-center gap-3">
-                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider bg-indigo-600 text-white shadow-sm">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        Modalità Osservatore Live - Aggiornamento automatico attivo
-                    </span>
-                    <div class="flex items-center gap-2 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-xl">
-                        <span class="text-xs font-bold uppercase text-slate-500">Stanza:</span>
-                        <span id="viewer-room-code" class="text-sm font-mono font-black tracking-wider text-slate-900">---</span>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-2.5">
-                    <button 
-                        id="leave-viewer-btn" 
-                        type="button" 
-                        class="btn-press px-4 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-sm flex items-center gap-2 transition-colors cursor-pointer"
-                    >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/>
-                        </svg>
-                        <span>Esci dalla sessione</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sezione 1: Riepilogo e Risultato in Tempo Reale -->
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6" aria-label="Riepilogo e risultato in tempo reale">
+        <!-- Riquadro Esito, Quorum e Barra Grafica Comparativa -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6" aria-label="Esito e Quorum">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-100">
                 <!-- Esito Calcolato -->
                 <div class="flex flex-wrap items-center gap-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Esito Provvisorio:</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Esito e Quorum:</span>
                     <div id="outcome-badge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl text-base sm:text-lg font-extrabold border bg-slate-100 text-slate-700 border-slate-300">
                         <span id="outcome-dot" class="w-2.5 h-2.5 rounded-full bg-slate-500"></span>
                         <span id="outcome-text">IN ATTESA DI VOTI</span>
@@ -399,85 +291,84 @@
                     <span id="outcome-detail" class="text-sm font-medium text-slate-600"></span>
                 </div>
 
-                <!-- Configurazione Maggioranza e Quorum -->
+                <!-- Configurazione Regola Maggioranza & Aventi Diritto -->
                 <div class="flex flex-wrap items-center gap-3">
                     <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5">
-                        <label for="majority-type" class="text-xs font-bold uppercase tracking-wide text-slate-600">Criterio:</label>
-                        <select id="majority-type" class="bg-transparent text-sm font-semibold text-slate-900 focus:outline-none cursor-pointer">
-                            <option value="simple">Maggioranza semplice (voti validi)</option>
-                            <option value="absolute">Maggioranza assoluta (aventi diritto)</option>
+                        <label for="majority-type" class="text-xs font-bold uppercase tracking-wide text-slate-600">Regola:</label>
+                        <select id="majority-type" class="bg-transparent text-sm font-semibold text-slate-900 focus:outline-none cursor-pointer disabled:cursor-default">
+                            <option value="simple">Maggioranza semplice (Favorevoli &gt; Contrari)</option>
+                            <option value="absolute">Maggioranza assoluta (50% + 1 aventi diritto)</option>
                         </select>
                     </div>
 
                     <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5">
-                        <label for="eligible-voters" class="text-xs font-bold uppercase tracking-wide text-slate-600" title="Numero totale degli aventi diritto al voto">Aventi diritto:</label>
+                        <label for="eligible-voters" class="text-xs font-bold uppercase tracking-wide text-slate-600">Aventi diritto:</label>
                         <input 
                             id="eligible-voters" 
                             type="number" 
                             min="0" 
                             placeholder="Opz." 
-                            class="w-20 bg-white border border-slate-300 rounded-lg px-2 py-0.5 text-sm font-bold text-slate-900 tabular-nums focus:border-indigo-500 focus:outline-none"
+                            class="w-20 bg-white border border-slate-300 rounded-lg px-2 py-0.5 text-sm font-bold text-slate-900 tabular-nums focus:border-indigo-500 focus:outline-none disabled:bg-slate-100"
                         />
                     </div>
                 </div>
             </div>
 
-            <!-- Barra Grafica Comparativa -->
+            <!-- Barra Grafica Comparativa in Tempo Reale -->
             <div class="mt-5">
-                <div class="flex justify-between text-xs font-bold text-slate-500 mb-2">
-                    <span>DISTRIBUZIONE PERCENTUALE SUL TOTALE SCRUTINATO</span>
+                <div class="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs font-bold text-slate-500 mb-2">
+                    <span>DISTRIBUZIONE VOTI IN TEMPO REALE</span>
                     <span id="quorum-status" class="text-slate-700"></span>
                 </div>
-                <div class="w-full h-6 bg-slate-100 rounded-xl overflow-hidden flex border border-slate-200 shadow-inner">
-                    <div id="bar-favorevoli" style="width: 0%" class="bg-emerald-600 transition-all duration-300 flex items-center justify-center text-[11px] font-bold text-white overflow-hidden"></div>
-                    <div id="bar-contrari" style="width: 0%" class="bg-rose-600 transition-all duration-300 flex items-center justify-center text-[11px] font-bold text-white overflow-hidden"></div>
-                    <div id="bar-astenuti" style="width: 0%" class="bg-amber-500 transition-all duration-300 flex items-center justify-center text-[11px] font-bold text-slate-950 overflow-hidden"></div>
-                    <div id="bar-nulle" style="width: 0%" class="bg-slate-500 transition-all duration-300 flex items-center justify-center text-[11px] font-bold text-white overflow-hidden"></div>
+                <div class="w-full h-7 bg-slate-100 rounded-xl overflow-hidden flex border border-slate-200 shadow-inner">
+                    <div id="bar-favorevoli" style="width: 0%" class="bg-emerald-600 transition-all duration-300 flex items-center justify-center text-xs font-extrabold text-white overflow-hidden"></div>
+                    <div id="bar-contrari" style="width: 0%" class="bg-rose-600 transition-all duration-300 flex items-center justify-center text-xs font-extrabold text-white overflow-hidden"></div>
+                    <div id="bar-astenuti" style="width: 0%" class="bg-amber-500 transition-all duration-300 flex items-center justify-center text-xs font-extrabold text-slate-950 overflow-hidden"></div>
+                    <div id="bar-nulle" style="width: 0%" class="bg-slate-600 transition-all duration-300 flex items-center justify-center text-xs font-extrabold text-white overflow-hidden"></div>
                 </div>
-                <!-- Legenda compatta -->
                 <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-xs font-semibold text-slate-600">
                     <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-emerald-600"></span> Favorevoli</div>
                     <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-rose-600"></span> Contrari</div>
                     <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-amber-500"></span> Astenuti</div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-slate-500"></span> Bianche / Nulle</div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-slate-600"></span> Bianche / Nulle</div>
                 </div>
             </div>
         </section>
 
-        <!-- Sezione 2: Griglia Pulsanti di Conteggio -->
-        <section aria-label="Pulsanti di conteggio voti" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        <!-- Quattro Schede Principali per il Conteggio -->
+        <section aria-label="Schede di conteggio voti" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
             
-            <!-- CARD 1: FAVOREVOLI -->
+            <!-- 1. FAVOREVOLI (Verde Smeraldo, F) -->
             <div id="card-favorevoli" class="bg-white rounded-2xl border-2 border-emerald-600/30 shadow-sm hover:border-emerald-600 transition-all p-5 flex flex-col justify-between">
                 <div class="flex items-start justify-between gap-4 mb-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 font-black text-xs border border-emerald-300" title="Tasto rapido F">F</span>
+                            <span class="shortcut-badge inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 font-black text-xs border border-emerald-300" title="Scorciatoia tastiera: F">F</span>
                             <h2 class="text-xl sm:text-2xl font-extrabold text-emerald-950 tracking-tight">Favorevoli</h2>
                         </div>
-                        <p class="text-xs font-medium text-emerald-700 mt-1">Voti a sostegno della proposta</p>
+                        <p class="text-xs font-medium text-emerald-700 mt-1">Voti a favore della proposta</p>
                     </div>
                     <div class="text-right">
-                        <div id="count-favorevoli" class="text-4xl sm:text-5xl font-black text-emerald-700 tabular-nums leading-none">0</div>
-                        <div id="pct-favorevoli" class="text-sm font-bold text-emerald-800/80 tabular-nums mt-1">0,0%</div>
+                        <div id="count-favorevoli" class="text-5xl sm:text-6xl font-black text-emerald-700 tabular-nums leading-none">0</div>
+                        <div id="pct-favorevoli" class="text-sm font-bold text-emerald-800/80 tabular-nums mt-1.5">0,0%</div>
                     </div>
                 </div>
-                <div class="flex items-stretch gap-3 mt-2 vote-controls-group">
+                <div class="vote-controls flex items-stretch gap-3 mt-2">
                     <button 
                         type="button" 
                         data-action="add" 
                         data-type="favorevoli"
-                        class="btn-press flex-1 min-h-[76px] sm:min-h-[88px] bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white rounded-xl font-black text-2xl sm:text-3xl shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 transition-colors select-none cursor-pointer"
+                        class="btn-press flex-1 min-h-[78px] sm:min-h-[88px] bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white rounded-xl font-black text-2xl sm:text-3xl shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 transition-colors select-none cursor-pointer"
                     >
                         <span>+1</span>
-                        <span class="text-sm font-semibold uppercase tracking-wider opacity-90 hidden sm:inline">Favorevole</span>
+                        <span class="text-sm font-bold uppercase tracking-wider opacity-90 hidden sm:inline">Favorevole</span>
                     </button>
                     <button 
                         type="button" 
                         data-action="sub" 
                         data-type="favorevoli"
-                        title="Rimuovi 1 voto favorevole"
-                        aria-label="Rimuovi 1 voto favorevole"
+                        title="Sottrai 1 voto favorevole"
+                        aria-label="Sottrai 1 voto favorevole"
                         class="btn-press w-16 sm:w-20 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 text-emerald-800 border-2 border-emerald-200 rounded-xl font-extrabold text-xl flex items-center justify-center transition-colors select-none cursor-pointer"
                     >
                         -1
@@ -485,37 +376,37 @@
                 </div>
             </div>
 
-            <!-- CARD 2: CONTRARI -->
+            <!-- 2. CONTRARI (Rosso Cremisi, C) -->
             <div id="card-contrari" class="bg-white rounded-2xl border-2 border-rose-600/30 shadow-sm hover:border-rose-600 transition-all p-5 flex flex-col justify-between">
                 <div class="flex items-start justify-between gap-4 mb-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-rose-100 text-rose-800 font-black text-xs border border-rose-300" title="Tasto rapido C">C</span>
+                            <span class="shortcut-badge inline-flex items-center justify-center w-7 h-7 rounded-lg bg-rose-100 text-rose-800 font-black text-xs border border-rose-300" title="Scorciatoia tastiera: C">C</span>
                             <h2 class="text-xl sm:text-2xl font-extrabold text-rose-950 tracking-tight">Contrari</h2>
                         </div>
-                        <p class="text-xs font-medium text-rose-700 mt-1">Voti opposti alla proposta</p>
+                        <p class="text-xs font-medium text-rose-700 mt-1">Voti contrari alla proposta</p>
                     </div>
                     <div class="text-right">
-                        <div id="count-contrari" class="text-4xl sm:text-5xl font-black text-rose-700 tabular-nums leading-none">0</div>
-                        <div id="pct-contrari" class="text-sm font-bold text-rose-800/80 tabular-nums mt-1">0,0%</div>
+                        <div id="count-contrari" class="text-5xl sm:text-6xl font-black text-rose-700 tabular-nums leading-none">0</div>
+                        <div id="pct-contrari" class="text-sm font-bold text-rose-800/80 tabular-nums mt-1.5">0,0%</div>
                     </div>
                 </div>
-                <div class="flex items-stretch gap-3 mt-2 vote-controls-group">
+                <div class="vote-controls flex items-stretch gap-3 mt-2">
                     <button 
                         type="button" 
                         data-action="add" 
                         data-type="contrari"
-                        class="btn-press flex-1 min-h-[76px] sm:min-h-[88px] bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white rounded-xl font-black text-2xl sm:text-3xl shadow-md shadow-rose-600/20 flex items-center justify-center gap-2 transition-colors select-none cursor-pointer"
+                        class="btn-press flex-1 min-h-[78px] sm:min-h-[88px] bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white rounded-xl font-black text-2xl sm:text-3xl shadow-md shadow-rose-600/20 flex items-center justify-center gap-2 transition-colors select-none cursor-pointer"
                     >
                         <span>+1</span>
-                        <span class="text-sm font-semibold uppercase tracking-wider opacity-90 hidden sm:inline">Contrario</span>
+                        <span class="text-sm font-bold uppercase tracking-wider opacity-90 hidden sm:inline">Contrario</span>
                     </button>
                     <button 
                         type="button" 
                         data-action="sub" 
                         data-type="contrari"
-                        title="Rimuovi 1 voto contrario"
-                        aria-label="Rimuovi 1 voto contrario"
+                        title="Sottrai 1 voto contrario"
+                        aria-label="Sottrai 1 voto contrario"
                         class="btn-press w-16 sm:w-20 bg-rose-50 hover:bg-rose-100 active:bg-rose-200 text-rose-800 border-2 border-rose-200 rounded-xl font-extrabold text-xl flex items-center justify-center transition-colors select-none cursor-pointer"
                     >
                         -1
@@ -523,27 +414,27 @@
                 </div>
             </div>
 
-            <!-- CARD 3: ASTENUTI -->
+            <!-- 3. ASTENUTI (Ambra, A) -->
             <div id="card-astenuti" class="bg-white rounded-2xl border-2 border-amber-500/40 shadow-sm hover:border-amber-500 transition-all p-5 flex flex-col justify-between">
                 <div class="flex items-start justify-between gap-4 mb-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-amber-100 text-amber-900 font-black text-xs border border-amber-300" title="Tasto rapido A">A</span>
+                            <span class="shortcut-badge inline-flex items-center justify-center w-7 h-7 rounded-lg bg-amber-100 text-amber-900 font-black text-xs border border-amber-300" title="Scorciatoia tastiera: A">A</span>
                             <h2 class="text-xl sm:text-2xl font-extrabold text-amber-950 tracking-tight">Astenuti</h2>
                         </div>
-                        <p class="text-xs font-medium text-amber-800 mt-1">Presenti non votanti / Astenuti</p>
+                        <p class="text-xs font-medium text-amber-800 mt-1">Presenti che si astengono dal voto</p>
                     </div>
                     <div class="text-right">
-                        <div id="count-astenuti" class="text-4xl sm:text-5xl font-black text-amber-600 tabular-nums leading-none">0</div>
-                        <div id="pct-astenuti" class="text-sm font-bold text-amber-800/80 tabular-nums mt-1">0,0%</div>
+                        <div id="count-astenuti" class="text-5xl sm:text-6xl font-black text-amber-600 tabular-nums leading-none">0</div>
+                        <div id="pct-astenuti" class="text-sm font-bold text-amber-800/80 tabular-nums mt-1.5">0,0%</div>
                     </div>
                 </div>
-                <div class="flex items-stretch gap-3 mt-2 vote-controls-group">
+                <div class="vote-controls flex items-stretch gap-3 mt-2">
                     <button 
                         type="button" 
                         data-action="add" 
                         data-type="astenuti"
-                        class="btn-press flex-1 min-h-[76px] sm:min-h-[88px] bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 rounded-xl font-black text-2xl sm:text-3xl shadow-md shadow-amber-500/20 flex items-center justify-center gap-2 transition-colors select-none cursor-pointer"
+                        class="btn-press flex-1 min-h-[78px] sm:min-h-[88px] bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 rounded-xl font-black text-2xl sm:text-3xl shadow-md shadow-amber-500/20 flex items-center justify-center gap-2 transition-colors select-none cursor-pointer"
                     >
                         <span>+1</span>
                         <span class="text-sm font-bold uppercase tracking-wider opacity-90 hidden sm:inline">Astenuto</span>
@@ -552,8 +443,8 @@
                         type="button" 
                         data-action="sub" 
                         data-type="astenuti"
-                        title="Rimuovi 1 voto astenuto"
-                        aria-label="Rimuovi 1 voto astenuto"
+                        title="Sottrai 1 voto astenuto"
+                        aria-label="Sottrai 1 voto astenuto"
                         class="btn-press w-16 sm:w-20 bg-amber-50 hover:bg-amber-100 active:bg-amber-200 text-amber-900 border-2 border-amber-200 rounded-xl font-extrabold text-xl flex items-center justify-center transition-colors select-none cursor-pointer"
                     >
                         -1
@@ -561,37 +452,37 @@
                 </div>
             </div>
 
-            <!-- CARD 4: SCHEDE BIANCHE / NULLE -->
+            <!-- 4. SCHEDE BIANCHE / NULLE (Ardesia, N) -->
             <div id="card-nulle" class="bg-white rounded-2xl border-2 border-slate-400/40 shadow-sm hover:border-slate-500 transition-all p-5 flex flex-col justify-between">
                 <div class="flex items-start justify-between gap-4 mb-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-slate-200 text-slate-800 font-black text-xs border border-slate-300" title="Tasto rapido N">N</span>
+                            <span class="shortcut-badge inline-flex items-center justify-center w-7 h-7 rounded-lg bg-slate-200 text-slate-800 font-black text-xs border border-slate-300" title="Scorciatoia tastiera: N">N</span>
                             <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Bianche / Nulle</h2>
                         </div>
-                        <p class="text-xs font-medium text-slate-600 mt-1">Schede non valide o non compilate</p>
+                        <p class="text-xs font-medium text-slate-600 mt-1">Schede bianche o non valide</p>
                     </div>
                     <div class="text-right">
-                        <div id="count-nulle" class="text-4xl sm:text-5xl font-black text-slate-700 tabular-nums leading-none">0</div>
-                        <div id="pct-nulle" class="text-sm font-bold text-slate-600 tabular-nums mt-1">0,0%</div>
+                        <div id="count-nulle" class="text-5xl sm:text-6xl font-black text-slate-700 tabular-nums leading-none">0</div>
+                        <div id="pct-nulle" class="text-sm font-bold text-slate-600 tabular-nums mt-1.5">0,0%</div>
                     </div>
                 </div>
-                <div class="flex items-stretch gap-3 mt-2 vote-controls-group">
+                <div class="vote-controls flex items-stretch gap-3 mt-2">
                     <button 
                         type="button" 
                         data-action="add" 
                         data-type="nulle"
-                        class="btn-press flex-1 min-h-[76px] sm:min-h-[88px] bg-slate-700 hover:bg-slate-800 active:bg-slate-900 text-white rounded-xl font-black text-2xl sm:text-3xl shadow-md shadow-slate-700/20 flex items-center justify-center gap-2 transition-colors select-none cursor-pointer"
+                        class="btn-press flex-1 min-h-[78px] sm:min-h-[88px] bg-slate-700 hover:bg-slate-800 active:bg-slate-900 text-white rounded-xl font-black text-2xl sm:text-3xl shadow-md shadow-slate-700/20 flex items-center justify-center gap-2 transition-colors select-none cursor-pointer"
                     >
                         <span>+1</span>
-                        <span class="text-sm font-semibold uppercase tracking-wider opacity-90 hidden sm:inline">Bianca / Nulla</span>
+                        <span class="text-sm font-bold uppercase tracking-wider opacity-90 hidden sm:inline">Bianca / Nulla</span>
                     </button>
                     <button 
                         type="button" 
                         data-action="sub" 
                         data-type="nulle"
-                        title="Rimuovi 1 scheda bianca o nulla"
-                        aria-label="Rimuovi 1 scheda bianca o nulla"
+                        title="Sottrai 1 scheda bianca o nulla"
+                        aria-label="Sottrai 1 scheda bianca o nulla"
                         class="btn-press w-16 sm:w-20 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 border-2 border-slate-300 rounded-xl font-extrabold text-xl flex items-center justify-center transition-colors select-none cursor-pointer"
                     >
                         -1
@@ -601,9 +492,71 @@
 
         </section>
 
-        <!-- Sezione 3: Cronologia Azioni & Esportazione / Reset -->
+        <!-- Sezione Registro Cronologico & Strumenti Verbale / Esportazione -->
         <section class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                    <div id="reset-btn-wrapper" class="pt-2 border-t border-slate-100">
+            
+            <!-- Registro Cronologico Movimenti (2 colonne) -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col">
+                <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-base font-extrabold text-slate-900">Registro Cronologico</h3>
+                        <span id="history-count" class="px-2 py-0.5 text-xs font-bold bg-slate-100 text-slate-600 rounded-full tabular-nums">0</span>
+                    </div>
+                    <button 
+                        id="undo-btn" 
+                        type="button" 
+                        disabled
+                        title="Annulla l'ultima operazione (Tasto Z)"
+                        class="btn-press inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"/>
+                        </svg>
+                        <span>Annulla ultimo</span>
+                        <kbd class="hidden sm:inline-block ml-1 px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-300 rounded">Z</kbd>
+                    </button>
+                </div>
+
+                <div id="history-list" class="mt-3 max-h-56 overflow-y-auto custom-scrollbar space-y-2 pr-1">
+                    <div class="text-sm text-slate-400 italic py-8 text-center">
+                        Nessun voto registrato. Usa i pulsanti sopra o i tasti F, C, A, N.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Azioni Verbale, CSV e Reset (1 colonna) -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col justify-between gap-4">
+                <div>
+                    <h3 class="text-base font-extrabold text-slate-900 pb-3 border-b border-slate-100">Verbale e Gestione</h3>
+                    <p class="text-xs text-slate-500 mt-2.5 leading-relaxed">
+                        Copia il riepilogo formattato per WhatsApp o email, esporta i dati in CSV oppure avvia un nuovo scrutinio.
+                    </p>
+                </div>
+
+                <div class="space-y-2.5">
+                    <button 
+                        id="copy-minutes-btn" 
+                        type="button" 
+                        class="btn-press w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"/>
+                        </svg>
+                        <span>Copia Verbale</span>
+                    </button>
+
+                    <button 
+                        id="export-csv-btn" 
+                        type="button" 
+                        class="btn-press w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+                        </svg>
+                        <span>Esporta CSV</span>
+                    </button>
+
+                    <div id="reset-container" class="pt-2 border-t border-slate-100">
                         <button 
                             id="reset-btn" 
                             type="button" 
@@ -612,7 +565,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
                             </svg>
-                            <span>Azzera Scrutinio</span>
+                            <span>Nuovo scrutinio / Azzera</span>
                         </button>
                     </div>
                 </div>
@@ -625,9 +578,9 @@
     <!-- Footer con legenda scorciatoie tastiera -->
     <footer class="bg-white border-t border-slate-200 py-3.5 px-4 mt-auto">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
-            <div class="font-semibold text-slate-700">Conteggio Voti &bull; Sistema di Scrutinio Elettronico</div>
-            <div id="keyboard-shortcuts-legend" class="flex flex-wrap items-center justify-center gap-3">
-                <span>Scorciatoie tastiera:</span>
+            <div class="font-semibold text-slate-700">Conteggio Voti &bull; Scrutinio Elettronico Autonomo</div>
+            <div id="shortcuts-footer" class="flex flex-wrap items-center justify-center gap-3">
+                <span>Scorciatoie:</span>
                 <span class="inline-flex items-center gap-1"><kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-bold text-slate-800">F</kbd> Favorevole</span>
                 <span class="inline-flex items-center gap-1"><kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-bold text-slate-800">C</kbd> Contrario</span>
                 <span class="inline-flex items-center gap-1"><kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-bold text-slate-800">A</kbd> Astenuto</span>
@@ -637,57 +590,15 @@
         </div>
     </footer>
 
-    <!-- Logica Applicativa con Sincronizzazione Firebase Firestore -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
+    <!-- Logica Applicativa 100% Autonoma + Sincronizzazione P2P Zero-Config (PeerJS) -->
+    <script>
         (function () {
             'use strict';
 
-            const STORAGE_KEY = 'conteggio_voti_scrutinio_v1';
-            const COLLECTION_NAME = 'scrutini_live';
+            const STORAGE_KEY = 'conteggio_voti_scrutinio_gh_v1';
+            const PEER_PREFIX = 'scrutinio-voti-';
 
-            // Inizializzazione Firebase
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            let db = null;
-            let auth = null;
-            let currentUser = null;
-            let authPromise = null;
-
-            try {
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                    const firebaseConfig = JSON.parse(__firebase_config);
-                    const app = initializeApp(firebaseConfig);
-                    db = getFirestore(app);
-                    auth = getAuth(app);
-
-                    authPromise = (async () => {
-                        try {
-                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                                const cred = await signInWithCustomToken(auth, __initial_auth_token);
-                                currentUser = cred.user;
-                            } else {
-                                const cred = await signInAnonymously(auth);
-                                currentUser = cred.user;
-                            }
-                        } catch (authErr) {
-                            console.error('Errore autenticazione Firebase:', authErr);
-                        }
-                    })();
-                }
-            } catch (initErr) {
-                console.error('Configurazione Firebase non disponibile:', initErr);
-            }
-
-            // Stato sessione live
-            let liveMode = 'local'; // 'local' | 'host' | 'viewer'
-            let roomCode = '';      // Codice formattato es. 'ABC-123'
-            let unsubscribeSnapshot = null;
-            let lastSeenActionCounter = null;
-
-            // Stato iniziale predefinito
+            // Stato predefinito dell'applicazione
             const defaultState = {
                 subject: 'Votazione Mozione / Delibera',
                 counts: {
@@ -696,16 +607,25 @@
                     astenuti: 0,
                     nulle: 0
                 },
-                history: [], // Array di oggetti: { id, type, delta, time }
+                history: [], // Array di { id, type, delta, time }
                 actionCounter: 0,
                 majorityType: 'simple', // 'simple' | 'absolute'
                 eligibleVoters: '',
                 soundEnabled: true
             };
 
+            // Carica subito lo stato salvato in localStorage
             let state = loadState();
 
-            // Metadati categorie di voto
+            // Stato della connessione PeerJS
+            let liveRole = 'local'; // 'local' | 'host' | 'viewer'
+            let roomCode = '';      // Es. 'K7M-49P'
+            let peerInstance = null;
+            let hostConnections = new Map(); // peerId -> DataConnection (usato da Scrutatore)
+            let viewerConnection = null;     // DataConnection verso Scrutatore (usato da Osservatore)
+            let reconnectTimer = null;
+            let livePanelOpen = true;
+
             const CATEGORIES = {
                 favorevoli: { label: 'Favorevole', plural: 'Favorevoli', badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
                 contrari:   { label: 'Contrario',  plural: 'Contrari',   badgeClass: 'bg-rose-100 text-rose-800 border-rose-200' },
@@ -713,15 +633,40 @@
                 nulle:      { label: 'Bianca / Nulla', plural: 'Bianche / Nulle', badgeClass: 'bg-slate-200 text-slate-800 border-slate-300' }
             };
 
-            // Riferimenti DOM
+            // Riferimenti agli elementi DOM
             const dom = {
                 liveDatetime: document.getElementById('live-datetime'),
+                headerLiveBadge: document.getElementById('header-live-badge'),
+                headerLiveDot: document.getElementById('header-live-dot'),
+                headerLiveText: document.getElementById('header-live-text'),
                 voteSubject: document.getElementById('vote-subject'),
+                toggleLivePanelBtn: document.getElementById('toggle-live-panel-btn'),
                 audioToggleBtn: document.getElementById('audio-toggle-btn'),
                 audioIconOn: document.getElementById('audio-icon-on'),
                 audioIconOff: document.getElementById('audio-icon-off'),
                 audioLabel: document.getElementById('audio-label'),
                 headerTotalVotes: document.getElementById('header-total-votes'),
+                // Banner Osservatore
+                viewerBanner: document.getElementById('viewer-banner'),
+                viewerBannerCode: document.getElementById('viewer-banner-code'),
+                bannerDisconnectBtn: document.getElementById('banner-disconnect-btn'),
+                // Pannello Condivisione Live
+                livePanel: document.getElementById('live-panel'),
+                liveSetupContainer: document.getElementById('live-setup-container'),
+                tabHostBtn: document.getElementById('tab-host-btn'),
+                tabViewerBtn: document.getElementById('tab-viewer-btn'),
+                tabHostContent: document.getElementById('tab-host-content'),
+                tabViewerContent: document.getElementById('tab-viewer-content'),
+                startHostBtn: document.getElementById('start-host-btn'),
+                viewerCodeInput: document.getElementById('viewer-code-input'),
+                connectViewerBtn: document.getElementById('connect-viewer-btn'),
+                liveActiveHost: document.getElementById('live-active-host'),
+                hostCodeDisplay: document.getElementById('host-code-display'),
+                connectedPeersCount: document.getElementById('connected-peers-count'),
+                copyCodeBtn: document.getElementById('copy-code-btn'),
+                copyLinkBtn: document.getElementById('copy-link-btn'),
+                stopHostBtn: document.getElementById('stop-host-btn'),
+                // Esito e Barra
                 outcomeBadge: document.getElementById('outcome-badge'),
                 outcomeDot: document.getElementById('outcome-dot'),
                 outcomeText: document.getElementById('outcome-text'),
@@ -753,37 +698,24 @@
                     astenuti: document.getElementById('pct-astenuti'),
                     nulle: document.getElementById('pct-nulle')
                 },
+                // Cronologia e Verbale
                 historyCount: document.getElementById('history-count'),
                 historyList: document.getElementById('history-list'),
                 undoBtn: document.getElementById('undo-btn'),
                 copyMinutesBtn: document.getElementById('copy-minutes-btn'),
                 exportCsvBtn: document.getElementById('export-csv-btn'),
+                resetContainer: document.getElementById('reset-container'),
                 resetBtn: document.getElementById('reset-btn'),
-                resetBtnWrapper: document.getElementById('reset-btn-wrapper'),
                 resetModal: document.getElementById('reset-modal'),
                 cancelResetBtn: document.getElementById('cancel-reset-btn'),
                 confirmResetBtn: document.getElementById('confirm-reset-btn'),
                 toastContainer: document.getElementById('toast-container'),
-                // Elementi Live Sync
-                liveSyncPanel: document.getElementById('live-sync-panel'),
-                livePanelLocal: document.getElementById('live-panel-local'),
-                livePanelHost: document.getElementById('live-panel-host'),
-                livePanelViewer: document.getElementById('live-panel-viewer'),
-                createLiveBtn: document.getElementById('create-live-btn'),
-                joinCodeInput: document.getElementById('join-code-input'),
-                joinLiveBtn: document.getElementById('join-live-btn'),
-                hostRoomCode: document.getElementById('host-room-code'),
-                hostSyncStatus: document.getElementById('host-sync-status'),
-                copyRoomCodeBtn: document.getElementById('copy-room-code-btn'),
-                leaveHostBtn: document.getElementById('leave-host-btn'),
-                viewerRoomCode: document.getElementById('viewer-room-code'),
-                leaveViewerBtn: document.getElementById('leave-viewer-btn'),
-                keyboardShortcutsLegend: document.getElementById('keyboard-shortcuts-legend')
+                shortcutsFooter: document.getElementById('shortcuts-footer')
             };
 
-            // ==========================================
-            // SINTETIZZATORE AUDIO (Web Audio API)
-            // ==========================================
+            // =========================================================
+            // 1. SINTETIZZATORE AUDIO (Web Audio API, 100% Offline)
+            // =========================================================
             let audioCtx = null;
 
             function playTone(type, delta = 1) {
@@ -791,6 +723,7 @@
                 try {
                     if (!audioCtx) {
                         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                        if (!AudioContextClass) return;
                         audioCtx = new AudioContextClass();
                     }
                     if (audioCtx.state === 'suspended') {
@@ -801,12 +734,7 @@
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
 
-                    // Toni distinti per riconoscimento vocale/uditivo immediato
-                    let freq = 440;
-                    let wave = 'sine';
-
                     if (delta < 0 || type === 'undo') {
-                        // Tono discendente per sottrazione / annullamento
                         osc.type = 'triangle';
                         osc.frequency.setValueAtTime(340, now);
                         osc.frequency.exponentialRampToValueAtTime(210, now + 0.14);
@@ -819,9 +747,12 @@
                         return;
                     }
 
+                    let freq = 440;
+                    let wave = 'sine';
+
                     switch (type) {
                         case 'favorevoli':
-                            freq = 659.25; // Mi5 (acuto, brillante)
+                            freq = 659.25; // Mi5 (acuto, positivo)
                             wave = 'sine';
                             break;
                         case 'contrari':
@@ -833,31 +764,29 @@
                             wave = 'sine';
                             break;
                         case 'nulle':
-                            freq = 369.99; // Fa#4 (sordo)
+                            freq = 369.99; // Fa#4 (distinto)
                             wave = 'sine';
                             break;
                     }
 
                     osc.type = wave;
                     osc.frequency.setValueAtTime(freq, now);
-
                     gain.gain.setValueAtTime(0.001, now);
                     gain.gain.linearRampToValueAtTime(0.22, now + 0.015);
                     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
 
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
-
                     osc.start(now);
                     osc.stop(now + 0.14);
-                } catch (err) {
-                    // Ignora silenziosamente se il browser blocca l'audio
+                } catch (e) {
+                    // Ignora eventuali restrizioni audio del browser
                 }
             }
 
-            // ==========================================
-            // GESTIONE STATO E PERSISTENZA (LOCALE + CLOUD)
-            // ==========================================
+            // =========================================================
+            // 2. PERSISTENZA LOCALE (localStorage)
+            // =========================================================
             function loadState() {
                 try {
                     const raw = localStorage.getItem(STORAGE_KEY);
@@ -873,282 +802,379 @@
                 }
             }
 
-            function saveState() {
-                // Salva sempre in localStorage quando siamo in modalità locale o host
-                if (liveMode !== 'viewer') {
+            function saveAndBroadcast() {
+                if (liveRole !== 'viewer') {
                     try {
                         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
                     } catch (e) {
-                        console.warn('Impossibile salvare in localStorage:', e);
+                        // Continua anche se localStorage è pieno o bloccato
                     }
                 }
-
-                // Se siamo Host in sessione Live, sincronizza su Firestore
-                if (liveMode === 'host' && roomCode) {
-                    pushStateToCloud();
+                if (liveRole === 'host') {
+                    broadcastStateToViewers();
                 }
             }
 
-            function normalizeRoomCode(raw) {
+            // =========================================================
+            // 3. SINCRONIZZAZIONE LIVE P2P ZERO-CONFIG (PeerJS)
+            // =========================================================
+            function generateRoomCode() {
+                const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Esclude caratteri ambigui (0, O, 1, I)
+                let part1 = '';
+                let part2 = '';
+                for (let i = 0; i < 3; i++) {
+                    part1 += chars[Math.floor(Math.random() * chars.length)];
+                    part2 += chars[Math.floor(Math.random() * chars.length)];
+                }
+                return `${part1}-${part2}`;
+            }
+
+            function normalizeCode(raw) {
                 const clean = (raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
                 if (clean.length !== 6) return null;
                 return `${clean.slice(0, 3)}-${clean.slice(3, 6)}`;
             }
 
-            function generateRoomCode() {
-                const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // Esclude I e O per leggibilità
-                const digits = '23456789';                  // Esclude 0 e 1 per leggibilità
-                let part1 = '';
-                let part2 = '';
-                for (let i = 0; i < 3; i++) {
-                    part1 += letters[Math.floor(Math.random() * letters.length)];
-                    part2 += digits[Math.floor(Math.random() * digits.length)];
-                }
-                return `${part1}-${part2}`;
+            function codeToPeerId(formattedCode) {
+                return PEER_PREFIX + formattedCode.replace('-', '');
             }
 
-            function getRoomDocRef(code) {
-                const docId = code.replace('-', '');
-                return doc(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME, docId);
-            }
-
-            async function ensureFirebaseReady() {
-                if (!db || !auth) {
-                    showToast('Servizio di sincronizzazione cloud non disponibile.', 'warning');
-                    return false;
-                }
-                if (authPromise) {
-                    await authPromise;
-                }
-                if (!currentUser) {
-                    showToast('Autenticazione al servizio live non riuscita.', 'warning');
-                    return false;
-                }
-                return true;
-            }
-
-            async function pushStateToCloud() {
-                if (liveMode !== 'host' || !roomCode) return;
-                const ready = await ensureFirebaseReady();
-                if (!ready) return;
-
-                try {
-                    if (dom.hostSyncStatus) {
-                        dom.hostSyncStatus.innerHTML = `<span class="text-amber-600">Salvataggio live...</span>`;
-                    }
-                    const docRef = getRoomDocRef(roomCode);
-                    await setDoc(docRef, {
-                        roomCode: roomCode,
-                        hostUid: currentUser.uid,
+            function getSyncPayload() {
+                return {
+                    type: 'SYNC_STATE',
+                    payload: {
                         subject: state.subject,
                         counts: state.counts,
                         history: state.history.slice(0, 100),
                         actionCounter: state.actionCounter,
                         majorityType: state.majorityType,
-                        eligibleVoters: state.eligibleVoters,
-                        updatedAt: Date.now()
-                    });
-                    if (dom.hostSyncStatus) {
-                        dom.hostSyncStatus.innerHTML = `
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                            Sincronizzato in tempo reale
-                        `;
+                        eligibleVoters: state.eligibleVoters
                     }
-                } catch (err) {
-                    console.error('Errore sincronizzazione Firestore:', err);
-                    if (dom.hostSyncStatus) {
-                        dom.hostSyncStatus.innerHTML = `<span class="text-rose-600">Errore di rete nella sincronizzazione</span>`;
+                };
+            }
+
+            function broadcastStateToViewers() {
+                if (liveRole !== 'host' || hostConnections.size === 0) return;
+                const message = getSyncPayload();
+                hostConnections.forEach((conn, peerId) => {
+                    try {
+                        if (conn && conn.open) {
+                            conn.send(message);
+                        } else {
+                            hostConnections.delete(peerId);
+                        }
+                    } catch (err) {
+                        hostConnections.delete(peerId);
                     }
+                });
+                updateConnectedPeersUI();
+            }
+
+            function updateConnectedPeersUI() {
+                if (dom.connectedPeersCount) {
+                    dom.connectedPeersCount.textContent = hostConnections.size;
                 }
             }
 
-            async function createLiveSession() {
-                const ready = await ensureFirebaseReady();
-                if (!ready) return;
+            function cleanupPeer() {
+                if (reconnectTimer) {
+                    clearTimeout(reconnectTimer);
+                    reconnectTimer = null;
+                }
+                if (viewerConnection) {
+                    try { viewerConnection.close(); } catch (e) {}
+                    viewerConnection = null;
+                }
+                hostConnections.forEach((conn) => {
+                    try { conn.close(); } catch (e) {}
+                });
+                hostConnections.clear();
 
-                dom.createLiveBtn.disabled = true;
-                try {
-                    // Genera codice univoco verificando che non esista già
-                    let candidate = generateRoomCode();
-                    for (let attempt = 0; attempt < 5; attempt++) {
-                        const snap = await getDoc(getRoomDocRef(candidate));
-                        if (!snap.exists()) break;
-                        candidate = generateRoomCode();
-                    }
-
-                    roomCode = candidate;
-                    liveMode = 'host';
-                    await pushStateToCloud();
-                    render();
-                    showToast(`Sessione Live avviata! Codice: ${roomCode}`, 'success');
-                } catch (err) {
-                    console.error('Errore creazione stanza:', err);
-                    liveMode = 'local';
-                    roomCode = '';
-                    showToast('Impossibile creare la sessione live.', 'warning');
-                } finally {
-                    dom.createLiveBtn.disabled = false;
+                if (peerInstance) {
+                    try { peerInstance.destroy(); } catch (e) {}
+                    peerInstance = null;
                 }
             }
 
-            async function joinLiveSession(rawCode) {
-                const formatted = normalizeRoomCode(rawCode);
-                if (!formatted) {
-                    showToast('Inserisci un codice valido di 6 caratteri (es. ABC-123).', 'warning');
-                    dom.joinCodeInput.focus();
+            function startHostSession(attempt = 1) {
+                if (typeof window.Peer === 'undefined') {
+                    showToast('Libreria di rete non ancora caricata. Controlla la connessione Internet e riprova.', 'warning');
                     return;
                 }
 
-                const ready = await ensureFirebaseReady();
-                if (!ready) return;
+                cleanupPeer();
+                dom.startHostBtn.disabled = true;
 
-                dom.joinLiveBtn.disabled = true;
+                const candidateCode = generateRoomCode();
+                const peerId = codeToPeerId(candidateCode);
+
                 try {
-                    const docRef = getRoomDocRef(formatted);
-                    const initialSnap = await getDoc(docRef);
-                    if (!initialSnap.exists()) {
-                        showToast(`Nessuna sessione attiva trovata con codice ${formatted}.`, 'warning');
-                        dom.joinLiveBtn.disabled = false;
-                        return;
-                    }
+                    const peer = new window.Peer(peerId, {
+                        debug: 0
+                    });
+                    peerInstance = peer;
 
-                    if (unsubscribeSnapshot) {
-                        unsubscribeSnapshot();
-                        unsubscribeSnapshot = null;
-                    }
+                    peer.on('open', () => {
+                        roomCode = candidateCode;
+                        liveRole = 'host';
+                        dom.startHostBtn.disabled = false;
+                        updateConnectedPeersUI();
+                        render();
+                        showToast(`Trasmissione Live avviata! Codice: ${roomCode}`, 'success');
+                    });
 
-                    roomCode = formatted;
-                    liveMode = 'viewer';
-                    lastSeenActionCounter = null;
+                    peer.on('connection', (conn) => {
+                        conn.on('open', () => {
+                            hostConnections.set(conn.peer, conn);
+                            updateConnectedPeersUI();
+                            // Invia immediatamente lo stato corrente al nuovo osservatore
+                            try {
+                                conn.send(getSyncPayload());
+                            } catch (e) {}
+                            showToast('Un amico si è collegato allo scrutinio live.', 'info');
+                        });
 
-                    unsubscribeSnapshot = onSnapshot(
-                        docRef,
-                        (snapshot) => {
-                            if (!snapshot.exists()) {
-                                showToast('La sessione live è stata chiusa dallo scrutatore.', 'info');
-                                leaveLiveSession(false);
-                                return;
-                            }
+                        conn.on('close', () => {
+                            hostConnections.delete(conn.peer);
+                            updateConnectedPeersUI();
+                        });
 
-                            const data = snapshot.data();
-                            const prevCounter = lastSeenActionCounter;
-                            const newCounter = typeof data.actionCounter === 'number' ? data.actionCounter : 0;
+                        conn.on('error', () => {
+                            hostConnections.delete(conn.peer);
+                            updateConnectedPeersUI();
+                        });
+                    });
 
-                            // Aggiorna stato locale in memoria con i dati remoti (preserva preferenza audio locale)
-                            const localSound = state.soundEnabled;
-                            state = {
-                                subject: data.subject || 'Votazione in corso',
-                                counts: {
-                                    favorevoli: Number(data.counts?.favorevoli || 0),
-                                    contrari: Number(data.counts?.contrari || 0),
-                                    astenuti: Number(data.counts?.astenuti || 0),
-                                    nulle: Number(data.counts?.nulle || 0)
-                                },
-                                history: Array.isArray(data.history) ? data.history : [],
-                                actionCounter: newCounter,
-                                majorityType: data.majorityType === 'absolute' ? 'absolute' : 'simple',
-                                eligibleVoters: data.eligibleVoters ?? '',
-                                soundEnabled: localSound
-                            };
-
-                            render();
-
-                            // Feedback visivo e sonoro quando arriva un nuovo voto in diretta
-                            if (prevCounter !== null && newCounter !== prevCounter && state.history.length > 0) {
-                                const latestVote = state.history[0];
-                                if (latestVote && latestVote.type) {
-                                    triggerCardFlash(latestVote.type);
-                                    playTone(latestVote.type, latestVote.delta || 1);
-                                }
-                            }
-                            lastSeenActionCounter = newCounter;
-                        },
-                        (error) => {
-                            console.error('Errore ricezione aggiornamenti live:', error);
-                            showToast('Connessione live interrotta. Riprova a collegarti.', 'warning');
+                    peer.on('disconnected', () => {
+                        // Riconnessione automatica al server di signaling
+                        if (liveRole === 'host' && peer && !peer.destroyed) {
+                            try { peer.reconnect(); } catch (e) {}
                         }
-                    );
+                    });
 
-                    showToast(`Collegato alla sessione ${roomCode} in sola lettura.`, 'success');
-                } catch (err) {
-                    console.error('Errore accesso stanza:', err);
-                    showToast('Errore durante il collegamento alla sessione.', 'warning');
-                } finally {
-                    dom.joinLiveBtn.disabled = false;
+                    peer.on('error', (err) => {
+                        dom.startHostBtn.disabled = false;
+                        if (err && err.type === 'unavailable-id' && attempt < 4) {
+                            // Collisione rara sul codice stanza: riprova con un nuovo codice
+                            startHostSession(attempt + 1);
+                            return;
+                        }
+                        console.warn('Errore PeerJS Scrutatore:', err);
+                        if (liveRole !== 'host') {
+                            cleanupPeer();
+                            liveRole = 'local';
+                            render();
+                        }
+                        showToast('Impossibile connettersi al server Live. Puoi comunque usare l’app in locale.', 'warning');
+                    });
+                } catch (e) {
+                    dom.startHostBtn.disabled = false;
+                    liveRole = 'local';
+                    render();
+                    showToast('Errore avvio trasmissione live.', 'warning');
                 }
             }
 
-            function leaveLiveSession(notify = true) {
-                if (unsubscribeSnapshot) {
-                    unsubscribeSnapshot();
-                    unsubscribeSnapshot = null;
+            function startViewerSession(rawCode, isAutoFromUrl = false) {
+                const formatted = normalizeCode(rawCode);
+                if (!formatted) {
+                    if (!isAutoFromUrl) {
+                        showToast('Inserisci un codice valido di 6 caratteri (es. K7M-49P).', 'warning');
+                        dom.viewerCodeInput.focus();
+                    }
+                    return;
                 }
-                const wasViewer = liveMode === 'viewer';
-                liveMode = 'local';
+
+                if (typeof window.Peer === 'undefined') {
+                    // Se lo script CDN sta ancora caricando al boot della pagina, riprova dopo 600ms
+                    if (isAutoFromUrl) {
+                        setTimeout(() => startViewerSession(formatted, true), 600);
+                    } else {
+                        showToast('Connessione di rete non disponibile. Riprova tra qualche secondo.', 'warning');
+                    }
+                    return;
+                }
+
+                cleanupPeer();
+                dom.connectViewerBtn.disabled = true;
+                dom.connectViewerBtn.textContent = 'Connessione...';
+
+                const targetPeerId = codeToPeerId(formatted);
+
+                try {
+                    const peer = new window.Peer({ debug: 0 });
+                    peerInstance = peer;
+
+                    peer.on('open', () => {
+                        const conn = peer.connect(targetPeerId, { reliable: true });
+                        viewerConnection = conn;
+
+                        // Timeout di sicurezza se lo scrutatore non risponde
+                        const connectTimeout = setTimeout(() => {
+                            if (liveRole !== 'viewer') {
+                                dom.connectViewerBtn.disabled = false;
+                                dom.connectViewerBtn.textContent = 'Collegati';
+                                cleanupPeer();
+                                showToast(`Nessuna sessione attiva trovata con codice ${formatted}.`, 'warning');
+                            }
+                        }, 9000);
+
+                        conn.on('open', () => {
+                            clearTimeout(connectTimeout);
+                            roomCode = formatted;
+                            liveRole = 'viewer';
+                            dom.connectViewerBtn.disabled = false;
+                            dom.connectViewerBtn.textContent = 'Collegati';
+                            render();
+                            showToast(`Collegato in diretta alla stanza ${roomCode}!`, 'success');
+                        });
+
+                        conn.on('data', (data) => {
+                            if (data && data.type === 'SYNC_STATE' && data.payload) {
+                                applyRemoteState(data.payload);
+                            }
+                        });
+
+                        conn.on('close', () => {
+                            if (liveRole === 'viewer') {
+                                showToast('Lo scrutatore ha chiuso la trasmissione live.', 'info');
+                                disconnectLiveSession(false);
+                            }
+                        });
+
+                        conn.on('error', () => {
+                            clearTimeout(connectTimeout);
+                            dom.connectViewerBtn.disabled = false;
+                            dom.connectViewerBtn.textContent = 'Collegati';
+                            if (liveRole === 'viewer') {
+                                showToast('Connessione persa con lo scrutatore. Tentativo di riconnessione...', 'warning');
+                                scheduleViewerReconnect(formatted);
+                            } else {
+                                cleanupPeer();
+                                showToast(`Impossibile raggiungere la stanza ${formatted}.`, 'warning');
+                            }
+                        });
+                    });
+
+                    peer.on('error', (err) => {
+                        dom.connectViewerBtn.disabled = false;
+                        dom.connectViewerBtn.textContent = 'Collegati';
+                        if (err && err.type === 'peer-unavailable') {
+                            showToast(`Codice stanza ${formatted} non trovato o trasmissione non attiva.`, 'warning');
+                        } else {
+                            showToast('Errore di rete durante il collegamento Live.', 'warning');
+                        }
+                        if (liveRole !== 'viewer') {
+                            cleanupPeer();
+                        }
+                    });
+                } catch (e) {
+                    dom.connectViewerBtn.disabled = false;
+                    dom.connectViewerBtn.textContent = 'Collegati';
+                    showToast('Errore durante il collegamento.', 'warning');
+                }
+            }
+
+            function scheduleViewerReconnect(formattedCode) {
+                if (reconnectTimer) clearTimeout(reconnectTimer);
+                reconnectTimer = setTimeout(() => {
+                    if (liveRole === 'viewer') {
+                        startViewerSession(formattedCode, true);
+                    }
+                }, 3000);
+            }
+
+            function applyRemoteState(remote) {
+                const prevCounter = state.actionCounter;
+                const newCounter = typeof remote.actionCounter === 'number' ? remote.actionCounter : 0;
+                const preservedSound = state.soundEnabled;
+
+                state = {
+                    subject: remote.subject || 'Votazione in corso',
+                    counts: {
+                        favorevoli: Number(remote.counts?.favorevoli || 0),
+                        contrari: Number(remote.counts?.contrari || 0),
+                        astenuti: Number(remote.counts?.astenuti || 0),
+                        nulle: Number(remote.counts?.nulle || 0)
+                    },
+                    history: Array.isArray(remote.history) ? remote.history : [],
+                    actionCounter: newCounter,
+                    majorityType: remote.majorityType === 'absolute' ? 'absolute' : 'simple',
+                    eligibleVoters: remote.eligibleVoters ?? '',
+                    soundEnabled: preservedSound
+                };
+
+                render();
+
+                // Animazione e suono quando arriva un nuovo movimento dallo scrutatore
+                if (newCounter !== prevCounter && state.history.length > 0) {
+                    const lastMove = state.history[0];
+                    if (lastMove && lastMove.type) {
+                        flashCard(lastMove.type);
+                        playTone(lastMove.type, lastMove.delta || 1);
+                    }
+                }
+            }
+
+            function disconnectLiveSession(notify = true) {
+                const wasViewer = liveRole === 'viewer';
+                cleanupPeer();
+                liveRole = 'local';
                 roomCode = '';
-                lastSeenActionCounter = null;
+
+                // Rimuove eventuale parametro ?room= dall'URL senza ricaricare la pagina
+                try {
+                    const url = new URL(window.location.href);
+                    if (url.searchParams.has('room')) {
+                        url.searchParams.delete('room');
+                        window.history.replaceState({}, '', url.toString());
+                    }
+                } catch (e) {}
 
                 if (wasViewer) {
-                    // Ripristina i dati locali salvati sul dispositivo dell'utente
-                    const localSound = state.soundEnabled;
+                    const preservedSound = state.soundEnabled;
                     state = loadState();
-                    state.soundEnabled = localSound;
+                    state.soundEnabled = preservedSound;
                 } else {
-                    saveState();
+                    saveAndBroadcast();
                 }
 
                 render();
                 if (notify) {
-                    showToast('Tornato alla modalità locale.', 'info');
+                    showToast('Connessione Live terminata.', 'info');
                 }
             }
 
-            function triggerCardFlash(type) {
-                const card = dom.cards[type];
-                if (!card) return;
-                card.classList.remove('live-flash');
-                void card.offsetWidth; // Force reflow per riavviare l'animazione
-                card.classList.add('live-flash');
+            function getDirectShareUrl() {
+                const url = new URL(window.location.href);
+                url.searchParams.set('room', roomCode);
+                return url.toString();
             }
 
-            function copyRoomCodeToClipboard() {
-                if (!roomCode) return;
-                const textarea = document.createElement('textarea');
-                textarea.value = roomCode;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    const ok = document.execCommand('copy');
-                    if (ok) {
-                        showToast(`Codice stanza ${roomCode} copiato!`, 'success');
-                    } else {
-                        showToast('Impossibile copiare il codice.', 'warning');
-                    }
-                } catch (err) {
-                    showToast('Errore durante la copia del codice.', 'warning');
-                } finally {
-                    document.body.removeChild(textarea);
-                }
-            }
-
-            // ==========================================
-            // LOGICA DI VOTO E CRONOLOGIA
-            // ==========================================
+            // =========================================================
+            // 4. LOGICA DI CONTEGGIO E CRONOLOGIA
+            // =========================================================
             function formatTime(date = new Date()) {
                 return date.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             }
 
             function formatPercent(value, total) {
                 if (total === 0) return '0,0%';
-                const pct = (value / total) * 100;
-                return pct.toFixed(1).replace('.', ',') + '%';
+                return ((value / total) * 100).toFixed(1).replace('.', ',') + '%';
+            }
+
+            function flashCard(type) {
+                const card = dom.cards[type];
+                if (!card) return;
+                card.classList.remove('card-flash');
+                void card.offsetWidth;
+                card.classList.add('card-flash');
             }
 
             function recordVote(type, delta) {
-                if (liveMode === 'viewer') return; // Blocco sicurezza in modalità osservatore
+                if (liveRole === 'viewer') return;
                 if (!CATEGORIES[type]) return;
+
                 if (delta < 0 && state.counts[type] <= 0) {
                     showToast(`Nessun voto "${CATEGORIES[type].plural}" da sottrarre.`, 'warning');
                     return;
@@ -1164,44 +1190,42 @@
                     time: formatTime()
                 });
 
-                // Manteniamo fino a 200 voci nella cronologia
                 if (state.history.length > 200) {
                     state.history.pop();
                 }
 
                 playTone(type, delta);
-                triggerCardFlash(type);
-                saveState();
+                flashCard(type);
+                saveAndBroadcast();
                 render();
             }
 
             function undoLastVote() {
-                if (liveMode === 'viewer') return; // Blocco sicurezza in modalità osservatore
+                if (liveRole === 'viewer') return;
                 if (state.history.length === 0) return;
+
                 const lastAction = state.history.shift();
-                // Ripristina il contatore assicurandosi di non scendere sotto zero
                 state.counts[lastAction.type] = Math.max(0, state.counts[lastAction.type] - lastAction.delta);
                 state.actionCounter += 1;
 
                 playTone('undo', -1);
-                saveState();
+                saveAndBroadcast();
                 render();
                 showToast(`Annullato: ${lastAction.delta > 0 ? '+1' : '-1'} ${CATEGORIES[lastAction.type].label}`, 'info');
             }
 
-            // ==========================================
-            // CALCOLO ESITO E MAGGIORANZA
-            // ==========================================
+            // =========================================================
+            // 5. CALCOLO ESITO, MAGGIORANZA E QUORUM
+            // =========================================================
             function calculateOutcome() {
                 const { favorevoli, contrari, astenuti, nulle } = state.counts;
                 const totalCast = favorevoli + contrari + astenuti + nulle;
-                const validVotes = favorevoli + contrari; // Voti validamente espressi (esclusi astenuti e nulle)
+                const validVotes = favorevoli + contrari;
                 const eligible = parseInt(state.eligibleVoters, 10);
                 const hasEligible = !isNaN(eligible) && eligible > 0;
 
                 if (totalCast === 0) {
                     return {
-                        status: 'WAITING',
                         label: 'IN ATTESA DI VOTI',
                         detail: 'Registra il primo voto per avviare il calcolo.',
                         quorumText: hasEligible ? `Aventi diritto: ${eligible} (Quorum 50%+1: ${Math.floor(eligible / 2) + 1})` : '',
@@ -1216,16 +1240,15 @@
                 if (hasEligible) {
                     const quorumNeeded = Math.floor(eligible / 2) + 1;
                     quorumReached = totalCast >= quorumNeeded;
-                    quorumText = `Partecipazione: ${totalCast}/${eligible} (Quorum costitutivo: ${quorumNeeded})`;
+                    quorumText = `Votanti: ${totalCast}/${eligible} (Quorum: ${quorumNeeded})`;
                 }
 
-                // Caso 1: Maggioranza Assoluta sugli aventi diritto
+                // Maggioranza assoluta (Favorevoli >= metà + 1 degli aventi diritto)
                 if (state.majorityType === 'absolute') {
                     if (!hasEligible) {
                         return {
-                            status: 'CONFIG_NEEDED',
                             label: 'INSERIRE AVENTI DIRITTO',
-                            detail: 'Specifica il numero di aventi diritto per la maggioranza assoluta.',
+                            detail: 'Indica il numero degli aventi diritto per calcolare la maggioranza assoluta.',
                             quorumText: '',
                             style: 'bg-amber-50 text-amber-800 border-amber-300',
                             dot: 'bg-amber-500'
@@ -1235,9 +1258,8 @@
                     const threshold = Math.floor(eligible / 2) + 1;
                     if (favorevoli >= threshold) {
                         return {
-                            status: 'APPROVED',
                             label: 'APPROVATA',
-                            detail: `Raggiunta maggioranza assoluta (${favorevoli} su ${threshold} richiesti)`,
+                            detail: `Maggioranza assoluta raggiunta (${favorevoli} su ${threshold} richiesti)`,
                             quorumText,
                             style: 'bg-emerald-50 text-emerald-800 border-emerald-300',
                             dot: 'bg-emerald-600'
@@ -1246,8 +1268,7 @@
                         const remaining = Math.max(0, eligible - totalCast);
                         const canStillWin = (favorevoli + remaining) >= threshold;
                         return {
-                            status: 'REJECTED',
-                            label: canStillWin ? 'NON ANCORA APPROVATA' : 'RESPINTA',
+                            label: canStillWin ? 'IN CORSO (SOGLIA NON RAGGIUNTA)' : 'RESPINTA',
                             detail: `Soglia maggioranza assoluta: ${threshold} favorevoli (attuali: ${favorevoli})`,
                             quorumText,
                             style: 'bg-rose-50 text-rose-800 border-rose-300',
@@ -1256,12 +1277,11 @@
                     }
                 }
 
-                // Caso 2: Maggioranza Semplice sui voti validi (Favorevoli > Contrari)
+                // Maggioranza semplice (Favorevoli > Contrari sui voti validi)
                 if (hasEligible && !quorumReached) {
                     return {
-                        status: 'NO_QUORUM',
-                        label: 'QUORUM NON RAGGIUNTO',
-                        detail: `Votanti ${totalCast} su ${Math.floor(eligible / 2) + 1} necessari per la validità`,
+                        label: 'NUMERO LEGALE NON RAGGIUNTO',
+                        detail: `Presenti votanti ${totalCast} su ${Math.floor(eligible / 2) + 1} necessari`,
                         quorumText,
                         style: 'bg-amber-50 text-amber-800 border-amber-300',
                         dot: 'bg-amber-500'
@@ -1270,9 +1290,8 @@
 
                 if (validVotes === 0) {
                     return {
-                        status: 'TIE',
-                        label: 'NESSUN VOTO ESPRESSO',
-                        detail: `Solo schede astenute (${astenuti}) o bianche/nulle (${nulle})`,
+                        label: 'NESSUN VOTO VALIDO',
+                        detail: `Solo astenuti (${astenuti}) o schede bianche/nulle (${nulle})`,
                         quorumText,
                         style: 'bg-slate-100 text-slate-700 border-slate-300',
                         dot: 'bg-slate-500'
@@ -1281,7 +1300,6 @@
 
                 if (favorevoli > contrari) {
                     return {
-                        status: 'APPROVED',
                         label: 'APPROVATA',
                         detail: `Maggioranza semplice (${favorevoli} Favorevoli vs ${contrari} Contrari)`,
                         quorumText,
@@ -1290,7 +1308,6 @@
                     };
                 } else if (contrari > favorevoli) {
                     return {
-                        status: 'REJECTED',
                         label: 'RESPINTA',
                         detail: `Prevalgono i contrari (${contrari} Contrari vs ${favorevoli} Favorevoli)`,
                         quorumText,
@@ -1299,9 +1316,8 @@
                     };
                 } else {
                     return {
-                        status: 'TIE',
                         label: 'PARITÀ',
-                        detail: `Parità tra Favorevoli (${favorevoli}) e Contrari (${contrari})`,
+                        detail: `Parità esatta (${favorevoli} Favorevoli e ${contrari} Contrari)`,
                         quorumText,
                         style: 'bg-amber-50 text-amber-900 border-amber-300',
                         dot: 'bg-amber-500'
@@ -1309,48 +1325,63 @@
                 }
             }
 
-            // ==========================================
-            // RENDERING INTERFACCIA
-            // ==========================================
+            // =========================================================
+            // 6. AGGIORNAMENTO INTERFACCIA (RENDER)
+            // =========================================================
             function render() {
                 const { favorevoli, contrari, astenuti, nulle } = state.counts;
                 const total = favorevoli + contrari + astenuti + nulle;
-                const isViewer = liveMode === 'viewer';
+                const isViewer = liveRole === 'viewer';
 
-                // Aggiorna pannello Condivisione Live
-                dom.livePanelLocal.classList.toggle('hidden', liveMode !== 'local');
-                dom.livePanelLocal.classList.toggle('flex', liveMode === 'local');
-
-                dom.livePanelHost.classList.toggle('hidden', liveMode !== 'host');
-                dom.livePanelHost.classList.toggle('flex', liveMode === 'host');
-                if (liveMode === 'host') {
-                    dom.hostRoomCode.textContent = roomCode;
-                    dom.liveSyncPanel.className = 'bg-indigo-50/60 rounded-2xl shadow-sm border-2 border-indigo-300 p-4 sm:p-5 transition-all';
-                } else if (liveMode === 'viewer') {
-                    dom.viewerRoomCode.textContent = roomCode;
-                    dom.liveSyncPanel.className = 'bg-indigo-50/70 rounded-2xl shadow-sm border-2 border-indigo-400 p-4 sm:p-5 transition-all';
+                // Badge stato Live in intestazione
+                if (liveRole === 'host') {
+                    dom.headerLiveBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-200 border border-rose-400/40';
+                    dom.headerLiveDot.className = 'w-2 h-2 rounded-full bg-rose-400 animate-ping';
+                    dom.headerLiveText.textContent = `Live: ${roomCode}`;
+                } else if (liveRole === 'viewer') {
+                    dom.headerLiveBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/40';
+                    dom.headerLiveDot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+                    dom.headerLiveText.textContent = `Osservatore: ${roomCode}`;
                 } else {
-                    dom.liveSyncPanel.className = 'bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5 transition-all';
+                    dom.headerLiveBadge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700';
+                    dom.headerLiveDot.className = 'w-2 h-2 rounded-full bg-slate-400';
+                    dom.headerLiveText.textContent = 'Locale';
                 }
 
-                dom.livePanelViewer.classList.toggle('hidden', liveMode !== 'viewer');
-                dom.livePanelViewer.classList.toggle('flex', liveMode === 'viewer');
+                // Banner Osservatore e Pannello Condivisione Live
+                dom.viewerBanner.classList.toggle('hidden', !isViewer);
+                if (isViewer) {
+                    dom.viewerBannerCode.textContent = roomCode;
+                }
 
-                // Gestione stato sola lettura per Modalità Osservatore
+                // Mostra o nasconde il pannello Condivisione Live
+                if (isViewer) {
+                    dom.livePanel.classList.add('hidden');
+                } else {
+                    dom.livePanel.classList.toggle('hidden', !livePanelOpen);
+                    dom.liveSetupContainer.classList.toggle('hidden', liveRole === 'host');
+                    dom.liveActiveHost.classList.toggle('hidden', liveRole !== 'host');
+                    if (liveRole === 'host') {
+                        dom.hostCodeDisplay.textContent = roomCode;
+                    }
+                }
+
+                // Blocca/nasconde i controlli di scrittura in modalità Osservatore
                 dom.voteSubject.disabled = isViewer;
                 dom.majorityType.disabled = isViewer;
                 dom.eligibleVoters.disabled = isViewer;
 
-                document.querySelectorAll('.vote-controls-group').forEach(el => {
+                document.querySelectorAll('.vote-controls').forEach(el => {
+                    el.classList.toggle('hidden', isViewer);
+                });
+                document.querySelectorAll('.shortcut-badge').forEach(el => {
                     el.classList.toggle('hidden', isViewer);
                 });
                 dom.undoBtn.classList.toggle('hidden', isViewer);
-                dom.resetBtnWrapper.classList.toggle('hidden', isViewer);
-                if (dom.keyboardShortcutsLegend) {
-                    dom.keyboardShortcutsLegend.classList.toggle('hidden', isViewer);
-                }
+                dom.resetContainer.classList.toggle('hidden', isViewer);
+                dom.shortcutsFooter.classList.toggle('hidden', isViewer);
 
-                // Aggiorna input intestazione & impostazioni
+                // Aggiorna campi testuali senza interrompere la digitazione attiva
                 if (document.activeElement !== dom.voteSubject) {
                     dom.voteSubject.value = state.subject;
                 }
@@ -1359,34 +1390,33 @@
                     dom.eligibleVoters.value = state.eligibleVoters;
                 }
 
-                // Aggiorna toggle audio
+                // Pulsante Audio
                 dom.audioToggleBtn.setAttribute('aria-pressed', String(state.soundEnabled));
                 if (state.soundEnabled) {
-                    dom.audioToggleBtn.className = 'flex items-center gap-2.5 px-4 py-2.5 rounded-xl font-semibold text-sm border transition-all bg-indigo-600 border-indigo-500 text-white shadow-sm hover:bg-indigo-500 cursor-pointer';
+                    dom.audioToggleBtn.className = 'btn-press flex items-center gap-2 px-3.5 py-2.5 rounded-xl font-bold text-sm border transition-all bg-indigo-600 border-indigo-500 text-white shadow-sm hover:bg-indigo-500 cursor-pointer';
                     dom.audioIconOn.classList.remove('hidden');
                     dom.audioIconOff.classList.add('hidden');
-                    dom.audioLabel.textContent = isViewer ? 'Suono live: ON' : 'Suono al clic: ON';
+                    dom.audioLabel.textContent = 'Audio: ON';
                 } else {
-                    dom.audioToggleBtn.className = 'flex items-center gap-2.5 px-4 py-2.5 rounded-xl font-semibold text-sm border transition-all bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 cursor-pointer';
+                    dom.audioToggleBtn.className = 'btn-press flex items-center gap-2 px-3.5 py-2.5 rounded-xl font-bold text-sm border transition-all bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 cursor-pointer';
                     dom.audioIconOn.classList.add('hidden');
                     dom.audioIconOff.classList.remove('hidden');
-                    dom.audioLabel.textContent = isViewer ? 'Suono live: OFF' : 'Suono al clic: OFF';
+                    dom.audioLabel.textContent = 'Audio: OFF';
                 }
 
-                // Totale in header
+                // Contatori, percentuali e barre
                 dom.headerTotalVotes.textContent = total;
 
-                // Aggiorna contatori, percentuali e barre
                 ['favorevoli', 'contrari', 'astenuti', 'nulle'].forEach(key => {
                     const val = state.counts[key];
-                    const pctNumeric = total > 0 ? (val / total) * 100 : 0;
+                    const pctNum = total > 0 ? (val / total) * 100 : 0;
                     dom.counts[key].textContent = val;
                     dom.pcts[key].textContent = formatPercent(val, total);
-                    dom.bars[key].style.width = `${pctNumeric}%`;
-                    dom.bars[key].textContent = pctNumeric >= 8 ? `${Math.round(pctNumeric)}%` : '';
+                    dom.bars[key].style.width = `${pctNum}%`;
+                    dom.bars[key].textContent = pctNum >= 8 ? `${Math.round(pctNum)}%` : '';
                 });
 
-                // Aggiorna esito
+                // Esito e Quorum
                 const outcome = calculateOutcome();
                 dom.outcomeBadge.className = `inline-flex items-center gap-2 px-4 py-1.5 rounded-xl text-base sm:text-lg font-extrabold border ${outcome.style}`;
                 dom.outcomeDot.className = `w-2.5 h-2.5 rounded-full ${outcome.dot}`;
@@ -1394,15 +1424,15 @@
                 dom.outcomeDetail.textContent = outcome.detail;
                 dom.quorumStatus.textContent = outcome.quorumText;
 
-                // Aggiorna Cronologia
+                // Registro Cronologico
                 dom.historyCount.textContent = state.history.length;
                 dom.undoBtn.disabled = state.history.length === 0;
 
                 if (state.history.length === 0) {
-                    dom.historyList.innerHTML = `<div class="text-sm text-slate-400 italic py-8 text-center">Nessun voto registrato finora. Usa i pulsanti sopra o i tasti F, C, A, N.</div>`;
+                    dom.historyList.innerHTML = `<div class="text-sm text-slate-400 italic py-8 text-center">Nessun voto registrato. Usa i pulsanti sopra o i tasti F, C, A, N.</div>`;
                 } else {
                     dom.historyList.innerHTML = state.history.map(item => {
-                        const cat = CATEGORIES[item.type];
+                        const cat = CATEGORIES[item.type] || CATEGORIES.favorevoli;
                         const sign = item.delta > 0 ? '+1' : '-1';
                         return `
                             <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 border border-slate-100 text-sm">
@@ -1419,9 +1449,30 @@
                 }
             }
 
-            // ==========================================
-            // ESPORTAZIONE VERBALE E CSV
-            // ==========================================
+            // =========================================================
+            // 7. VERBALE, CSV, CLIPBOARD E NOTIFICHE
+            // =========================================================
+            function copyTextFallbackSafe(text, successMsg) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    const ok = document.execCommand('copy');
+                    if (ok) {
+                        showToast(successMsg, 'success');
+                    } else {
+                        showToast('Impossibile copiare automaticamente.', 'warning');
+                    }
+                } catch (err) {
+                    showToast('Errore durante la copia negli appunti.', 'warning');
+                } finally {
+                    document.body.removeChild(textarea);
+                }
+            }
+
             function generateMinutesText() {
                 const { favorevoli, contrari, astenuti, nulle } = state.counts;
                 const total = favorevoli + contrari + astenuti + nulle;
@@ -1430,12 +1481,12 @@
                 const subject = state.subject.trim() || 'Votazione senza titolo';
                 const eligible = parseInt(state.eligibleVoters, 10);
 
-                let lines = [
+                const lines = [
                     `VERBALE DI SCRUTINIO`,
                     `========================================`,
                     `Oggetto: ${subject}`,
                     `Data e ora: ${nowStr}`,
-                    `Criterio: ${state.majorityType === 'simple' ? 'Maggioranza semplice sui voti validi' : 'Maggioranza assoluta sugli aventi diritto'}`
+                    `Regola: ${state.majorityType === 'simple' ? 'Maggioranza semplice (Favorevoli > Contrari)' : 'Maggioranza assoluta (50% + 1 aventi diritto)'}`
                 ];
 
                 if (!isNaN(eligible) && eligible > 0) {
@@ -1450,35 +1501,12 @@
                     `- Astenuti:        ${astenuti} (${formatPercent(astenuti, total)})`,
                     `- Bianche / Nulle: ${nulle} (${formatPercent(nulle, total)})`,
                     `----------------------------------------`,
-                    `TOTALE SCHEDE SCRUTINATE: ${total}`,
+                    `TOTALE VOTANTI: ${total}`,
                     `ESITO: ${outcome.label} (${outcome.detail})`,
                     `========================================`
                 );
 
                 return lines.join('\n');
-            }
-
-            function copyMinutesToClipboard() {
-                const text = generateMinutesText();
-                // Uso di document.execCommand('copy') per massima compatibilità in ambienti iframe
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    const ok = document.execCommand('copy');
-                    if (ok) {
-                        showToast('Verbale copiato negli appunti!', 'success');
-                    } else {
-                        showToast('Impossibile copiare automaticamente.', 'warning');
-                    }
-                } catch (err) {
-                    showToast('Errore durante la copia negli appunti.', 'warning');
-                } finally {
-                    document.body.removeChild(textarea);
-                }
             }
 
             function exportCSV() {
@@ -1489,7 +1517,7 @@
                 const timestamp = new Date().toISOString();
 
                 const rows = [
-                    ['Oggetto', 'Data_Ora_ISO', 'Favorevoli', 'Contrari', 'Astenuti', 'Bianche_Nulle', 'Totale_Scrutinati', 'Esito'],
+                    ['Oggetto', 'Data_Ora_ISO', 'Favorevoli', 'Contrari', 'Astenuti', 'Bianche_Nulle', 'Totale_Votanti', 'Esito'],
                     [subjectSafe, timestamp, favorevoli, contrari, astenuti, nulle, total, `"${outcome.label}"`]
                 ];
 
@@ -1498,25 +1526,22 @@
                 const url = URL.createObjectURL(blob);
 
                 const link = document.createElement('a');
-                const fileSlug = (state.subject || 'scrutinio')
+                const slug = (state.subject || 'scrutinio')
                     .toLowerCase()
                     .replace(/[^a-z0-9]+/gi, '_')
                     .replace(/^_|_$/g, '')
                     .slice(0, 40) || 'scrutinio';
 
                 link.href = url;
-                link.download = `${fileSlug}_${new Date().toISOString().slice(0, 10)}.csv`;
+                link.download = `${slug}_${new Date().toISOString().slice(0, 10)}.csv`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
                 URL.revokeObjectURL(url);
 
-                showToast('File CSV scaricato con successo!', 'success');
+                showToast('File CSV esportato!', 'success');
             }
 
-            // ==========================================
-            // NOTIFICHE TOAST E MODALE RESET
-            // ==========================================
             function showToast(message, variant = 'info') {
                 const toast = document.createElement('div');
                 const styles = {
@@ -1524,7 +1549,7 @@
                     warning: 'bg-amber-900 text-white border-amber-700',
                     info:    'bg-slate-900 text-white border-slate-700'
                 };
-                toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-lg border text-sm font-semibold flex items-center gap-2.5 transform transition-all duration-300 translate-y-2 opacity-0 ${styles[variant] || styles.info}`;
+                toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-lg border text-sm font-semibold transform transition-all duration-300 translate-y-2 opacity-0 ${styles[variant] || styles.info}`;
                 toast.textContent = message;
                 dom.toastContainer.appendChild(toast);
 
@@ -1535,7 +1560,7 @@
                 setTimeout(() => {
                     toast.classList.add('translate-y-2', 'opacity-0');
                     setTimeout(() => toast.remove(), 300);
-                }, 2600);
+                }, 2800);
             }
 
             function openResetModal() {
@@ -1549,23 +1574,25 @@
             }
 
             function performReset() {
-                if (liveMode === 'viewer') return;
+                if (liveRole === 'viewer') return;
                 const preservedSound = state.soundEnabled;
                 const preservedSubject = state.subject;
                 const nextCounter = state.actionCounter + 1;
+
                 state = JSON.parse(JSON.stringify(defaultState));
                 state.soundEnabled = preservedSound;
                 state.subject = preservedSubject;
                 state.actionCounter = nextCounter;
-                saveState();
+
+                saveAndBroadcast();
                 render();
                 closeResetModal();
-                showToast('Conteggio azzerato.', 'info');
+                showToast('Scrutinio azzerato.', 'info');
             }
 
-            // ==========================================
-            // EVENT LISTENERS & OROLOGIO LIVE
-            // ==========================================
+            // =========================================================
+            // 8. INIZIALIZZAZIONE EVENTI E AVVIO IMMEDIATO
+            // =========================================================
             function updateClock() {
                 const now = new Date();
                 dom.liveDatetime.textContent = now.toLocaleDateString('it-IT', {
@@ -1580,7 +1607,7 @@
                 });
             }
 
-            // Delegazione clic sui pulsanti +1 / -1
+            // Pulsanti +1 e -1 delle quattro schede
             document.querySelectorAll('button[data-action]').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const action = btn.getAttribute('data-action');
@@ -1589,75 +1616,101 @@
                 });
             });
 
-            // Input oggetto votazione
+            // Campi modificabili
             dom.voteSubject.addEventListener('input', (e) => {
-                if (liveMode === 'viewer') return;
+                if (liveRole === 'viewer') return;
                 state.subject = e.target.value;
-                saveState();
+                saveAndBroadcast();
             });
 
-            // Selettore maggioranza
             dom.majorityType.addEventListener('change', (e) => {
-                if (liveMode === 'viewer') return;
+                if (liveRole === 'viewer') return;
                 state.majorityType = e.target.value;
-                saveState();
+                saveAndBroadcast();
                 render();
             });
 
-            // Input aventi diritto
             dom.eligibleVoters.addEventListener('input', (e) => {
-                if (liveMode === 'viewer') return;
+                if (liveRole === 'viewer') return;
                 state.eligibleVoters = e.target.value;
-                saveState();
+                saveAndBroadcast();
                 render();
             });
 
-            // Eventi Condivisione Live
-            dom.createLiveBtn.addEventListener('click', createLiveSession);
-            dom.joinLiveBtn.addEventListener('click', () => joinLiveSession(dom.joinCodeInput.value));
-            dom.joinCodeInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    joinLiveSession(dom.joinCodeInput.value);
-                }
-            });
-            dom.copyRoomCodeBtn.addEventListener('click', copyRoomCodeToClipboard);
-            dom.leaveHostBtn.addEventListener('click', () => leaveLiveSession(true));
-            dom.leaveViewerBtn.addEventListener('click', () => leaveLiveSession(true));
-
-            // Toggle suono
+            // Toggle Audio
             dom.audioToggleBtn.addEventListener('click', () => {
                 state.soundEnabled = !state.soundEnabled;
-                saveState();
+                saveAndBroadcast();
                 render();
                 if (state.soundEnabled) playTone('favorevoli', 1);
             });
 
-            // Annulla, Copia, CSV, Reset
+            // Toggle Pannello Condivisione Live
+            dom.toggleLivePanelBtn.addEventListener('click', () => {
+                if (liveRole === 'viewer') return;
+                livePanelOpen = !livePanelOpen;
+                dom.toggleLivePanelBtn.setAttribute('aria-expanded', String(livePanelOpen));
+                render();
+            });
+
+            // Schede nel pannello Live (Trasmetti vs Segui)
+            dom.tabHostBtn.addEventListener('click', () => {
+                dom.tabHostBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-white text-indigo-700 shadow-sm transition-all cursor-pointer';
+                dom.tabViewerBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all cursor-pointer';
+                dom.tabHostContent.classList.remove('hidden');
+                dom.tabViewerContent.classList.add('hidden');
+            });
+
+            dom.tabViewerBtn.addEventListener('click', () => {
+                dom.tabViewerBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-white text-indigo-700 shadow-sm transition-all cursor-pointer';
+                dom.tabHostBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all cursor-pointer';
+                dom.tabViewerContent.classList.remove('hidden');
+                dom.tabHostContent.classList.add('hidden');
+                dom.viewerCodeInput.focus();
+            });
+
+            // Azioni Condivisione Live
+            dom.startHostBtn.addEventListener('click', () => startHostSession(1));
+            dom.connectViewerBtn.addEventListener('click', () => startViewerSession(dom.viewerCodeInput.value, false));
+            dom.viewerCodeInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    startViewerSession(dom.viewerCodeInput.value, false);
+                }
+            });
+            dom.copyCodeBtn.addEventListener('click', () => {
+                if (roomCode) copyTextFallbackSafe(roomCode, `Codice stanza ${roomCode} copiato!`);
+            });
+            dom.copyLinkBtn.addEventListener('click', () => {
+                if (roomCode) copyTextFallbackSafe(getDirectShareUrl(), 'Link diretto copiato! Invialo ai tuoi amici.');
+            });
+            dom.stopHostBtn.addEventListener('click', () => disconnectLiveSession(true));
+            dom.bannerDisconnectBtn.addEventListener('click', () => disconnectLiveSession(true));
+
+            // Azioni Registro, Verbale, CSV e Reset
             dom.undoBtn.addEventListener('click', undoLastVote);
-            dom.copyMinutesBtn.addEventListener('click', copyMinutesToClipboard);
+            dom.copyMinutesBtn.addEventListener('click', () => {
+                copyTextFallbackSafe(generateMinutesText(), 'Verbale copiato negli appunti!');
+            });
             dom.exportCsvBtn.addEventListener('click', exportCSV);
             dom.resetBtn.addEventListener('click', openResetModal);
             dom.cancelResetBtn.addEventListener('click', closeResetModal);
             dom.confirmResetBtn.addEventListener('click', performReset);
-
-            // Chiudi modale cliccando sullo sfondo o premendo ESC
             dom.resetModal.addEventListener('click', (e) => {
                 if (e.target === dom.resetModal) closeResetModal();
-            // Scorciatoie da tastiera (disattivate se si sta scrivendo in un campo o in modalità osservatore)
+            });
+
+            // Scorciatoie da tastiera (F, C, A, N, Z, ESC)
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !dom.resetModal.classList.contains('hidden')) {
                     closeResetModal();
                     return;
                 }
 
-                if (liveMode === 'viewer') return;
+                if (liveRole === 'viewer') return;
 
                 const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
-                if (tag === 'input' || tag === 'textarea' || tag === 'select') {
-                    return;
-                }
-
+                if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
                 if (e.ctrlKey || e.metaKey || e.altKey) return;
 
                 const key = e.key.toLowerCase();
@@ -1679,10 +1732,25 @@
                 }
             });
 
-            // Avvio iniziale
+            // Avvio immediato dell'interfaccia locale (zero dipendenze bloccanti)
             updateClock();
             setInterval(updateClock, 1000);
             render();
+
+            // Controlla se l'URL contiene ?room=CODICE per collegarsi automaticamente come Osservatore
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const roomParam = params.get('room');
+                if (roomParam) {
+                    dom.tabViewerBtn.click();
+                    dom.viewerCodeInput.value = roomParam.toUpperCase();
+                    window.addEventListener('load', () => {
+                        startViewerSession(roomParam, true);
+                    });
+                }
+            } catch (e) {
+                // Ignora eventuali errori di parsing URL
+            }
         })();
     </script>
 </body>
